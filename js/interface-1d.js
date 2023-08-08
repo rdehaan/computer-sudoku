@@ -1,6 +1,173 @@
 // This file is released under the MIT license.
 // See LICENSE.md.
 
+var Clingo = {};
+var outputElement = document.getElementById('output');
+var runButton = document.getElementById('run');
+var input = ace.edit("input");
+var ex = document.getElementById("examples");
+var output = "";
+var pretty_output = "";
+
+var prettyOutputElement = document.getElementById('pretty-output');
+var outputElement = document.getElementById('output');
+
+input.setTheme("ace/theme/textmate");
+input.$blockScrolling = Infinity;
+input.setOptions({
+  useSoftTabs: true,
+  tabSize: 2,
+  maxLines: Infinity,
+  mode: "ace/mode/gringo",
+  autoScrollEditorIntoView: true
+});
+
+function load_example() {
+  load_example_from_path(ex.value);
+}
+
+function load_example_from_path(path) {
+  var request = new XMLHttpRequest();
+  request.onreadystatechange = function() {
+    if (request.readyState == 4 && request.status == 200) {
+      input.setValue(request.responseText.trim(), -1);
+    }
+  }
+  request.open("GET", path, true);
+  request.send();
+}
+
+function solve() {
+  interface_before_start();
+  options = "";
+  var index = document.getElementById("mode").selectedIndex;
+  if (index >= 0) {
+    if (index == 1) {
+      options += " --opt-mode=optN 0";
+    }
+  }
+  var index = document.getElementById("heuristic").selectedIndex;
+  if (index == 0) {
+    options += " --heuristic=Domain"
+  } else if (index == 1) {
+    options += " --heuristic=Berkmin"
+  } else if (index == 2) {
+    options += " --heuristic=Vmtf"
+  } else if (index == 3) {
+    options += " --heuristic=Vsids"
+  } else if (index == 4) {
+    options += " --heuristic=Unit"
+  } else if (index == 5) {
+    options += " --heuristic=None"
+  }
+  restart_num = document.getElementById("restarts").valueAsNumber;
+  if (restart_num != NaN && restart_num >= 1) {
+    options += " --restarts F," + restart_num;
+  }
+  more_options = document.getElementById("more-options").value;
+  if (more_options != "") {
+    options += " " + more_options;
+  }
+  output = "";
+  Clingo.ccall('run', 'number', ['string', 'string', 'string'], [input.getValue() + hidden_program, options, watched_predicates()])
+  updateOutput();
+}
+
+function clearOutput() {
+  output = "";
+  updateOutput();
+}
+
+function updateOutput() {
+  if (outputElement) {
+    outputElement.textContent = output;
+    outputElement.scrollTop = outputElement.scrollHeight; // focus on bottom
+  }
+}
+
+function addToPrettyOutput(text) {
+  pretty_output += text + "\n";
+  updatePrettyOutput();
+}
+
+function clearPrettyOutput() {
+  pretty_output = "";
+  updatePrettyOutput();
+}
+
+function updatePrettyOutput() {
+  if (prettyOutputElement) {
+    prettyOutputElement.textContent = pretty_output;
+    prettyOutputElement.scrollTop = prettyOutputElement.scrollHeight; // focus on bottom
+  }
+}
+
+Clingo = {
+  preRun: [],
+  postRun: [],
+  print: (function() {
+    return function(text) {
+      if (arguments.length > 1) text = Array.prototype.slice.call(arguments).join(' ');
+      output += text + "\n";
+    };
+  })(),
+  printErr: function(text) {
+    if (arguments.length > 1) text = Array.prototype.slice.call(arguments).join(' ');
+    if (text == "Calling stub instead of signal()") { return; }
+    var prefix = "pre-main prep time: ";
+    if (typeof text=="string" && prefix == text.slice(0, prefix.length)) { text = "Ready to go!" }
+    output += text + "\n";
+    updateOutput();
+  },
+  setStatus: function(text) {
+    if (text == "") { runButton.disabled = false; }
+    else {
+      output += text + "\n";
+      updateOutput();
+    }
+  },
+  totalDependencies: 0,
+  monitorRunDependencies: function(left) {
+    this.totalDependencies = Math.max(this.totalDependencies, left);
+    Clingo.setStatus(left ? 'Preparing... (' + (this.totalDependencies-left) + '/' + this.totalDependencies + ')' : 'All downloads complete.');
+    addToPrettyOutput(left ? "Preparing.." : "All downloads complete..");
+  }
+};
+Clingo.setStatus('Downloading...');
+addToPrettyOutput("Downloading..");
+window.onerror = function(event) {
+  Clingo.setStatus('Exception thrown, see JavaScript console');
+  addToPrettyOutput("Something went wrong.. :(");
+};
+
+// Initialize Emscripten Module
+Module = Module(Clingo);
+
+var QueryString = function () {
+  var query_string = {};
+  var query = window.location.search.substring(1);
+  var vars = query.split("&");
+  for (var i=0;i<vars.length;i++) {
+    var pair = vars[i].split("=");
+    if (typeof query_string[pair[0]] === "undefined") {
+      query_string[pair[0]] = decodeURIComponent(pair[1]);
+    } else if (typeof query_string[pair[0]] === "string") {
+      var arr = [ query_string[pair[0]],decodeURIComponent(pair[1]) ];
+      query_string[pair[0]] = arr;
+    } else {
+      query_string[pair[0]].push(decodeURIComponent(pair[1]));
+    }
+  }
+  return query_string;
+}();
+
+if (QueryString.example !== undefined) {
+  ex.value = "/clingo/run/examples/" + QueryString.example;
+  load_example("/clingo/run/examples/" + QueryString.example);
+}
+
+hidden_program = "";
+
 lit_to_atom = {};
 model_found = false;
 
@@ -81,6 +248,7 @@ function interface_check(model) {
 }
 function interface_on_model() {
   console.log("Interface: on_model");
+  addToPrettyOutput("Found solution! :)");
 }
 // function interface_on_unsat() {
 //   console.log("Interface: on_unsat");
@@ -90,6 +258,8 @@ function interface_on_model() {
 // }
 function interface_before_start() {
   console.log("Interface: before start");
+  clearPrettyOutput();
+  addToPrettyOutput("Solving..");
   lit_to_atom = {};
   model_found = false;
   sudoku_initialize_candidates();

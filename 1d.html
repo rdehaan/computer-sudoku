@@ -14,7 +14,6 @@ See LICENSE.md.
   <title>How computers solve Sudoku's</title>
 
   <link rel="stylesheet" href="css/main.css">
-  <link rel="stylesheet" href="css/clingo.css">
   <link rel="stylesheet" href="css/sudoku.css">
 </head>
 
@@ -125,10 +124,12 @@ See LICENSE.md.
           <div>&nbsp;</div>
 
           <div>
-            <b>Solver output:</b>
+            <b>Status:</b>
           </div>
 
-          <pre id="output" class="code"></pre>
+          <pre id="pretty-output" class="code"></pre>
+
+          <pre id="output" class="code" style="display: none;"></pre>
 
         </div>
 
@@ -148,9 +149,8 @@ See LICENSE.md.
 
 <script type="text/javascript" src="js/ace.js" charset="utf-8"></script>
 <script type="text/javascript" src="js/clingo.js" charset="utf-8"></script>
-<script type="text/javascript" src="js/clingo-module.js" charset="utf-8"></script>
 <script type="text/javascript" src="js/sudoku.js" charset="utf-8"></script>
-<script type="text/javascript" src="js/interface1d.js" charset="utf-8"></script>
+<script type="text/javascript" src="js/interface-1d.js" charset="utf-8"></script>
 <script type="text/javascript" src="js/navigation.js" charset="utf-8"></script>
 <script type="text/javascript">
   insertNav("1d");
