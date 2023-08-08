@@ -14,7 +14,7 @@ See LICENSE.md.
   <title>How computers solve Sudoku's</title>
 
   <link rel="stylesheet" href="css/main.css">
-  <link rel="stylesheet" href="css/sudoku.css">
+  <link rel="stylesheet" href="css/clauses.css">
 </head>
 
 <body>
@@ -49,7 +49,7 @@ See LICENSE.md.
 
             <p>&nbsp;</p>
 
-            <div id="sudoku" class="sudoku-board"></div>
+            <div id="formula"></div>
 
             <ul class="hlist">
               <li>
@@ -63,11 +63,11 @@ See LICENSE.md.
                 Speed:
                 <select id="speed">
                   <option value="2.0">Slow</option>
-                  <option value="1.0">Normal</option>
+                  <option value="1.0" selected>Normal</option>
                   <option value="0.5">Fast</option>
                   <option value="0.25">Very fast</option>
                   <option value="0.1">Ultra fast</option>
-                  <option value="0" selected>Instant</option>
+                  <option value="0">Instant</option>
                 </select>
               </li>
             </ul>
@@ -75,18 +75,30 @@ See LICENSE.md.
           </div>
           <div>
 
+            <div>&nbsp;</div>
+
             <div>
               <b>Status:</b>
             </div>
 
-            <pre id="output" class="code" style="display: none;"></pre>
-
             <pre id="pretty-output" class="code"></pre>
 
+            <pre id="output" class="code" style="display: none;"></pre>
+
+            <pre id="input" style="display: none;">
+c this is a comment
+p cnf 3 8
+1 2 3 0
+1 2 -3 0
+1 -2 3 0
+1 -2 -3 0
+-1 2 3 0
+-1 2 -3 0
+-1 -2 3 0
+-1 -2 -3 0</pre>
+
           </div>
 
-          <div>
-          </div>
         </div>
 
       </article>
@@ -103,10 +115,9 @@ See LICENSE.md.
   </footer>
 </body>
 
-<script type="text/javascript" src="js/sudoku.js" charset="utf-8"></script>
+<script type="text/javascript" src="js/ace.js" charset="utf-8"></script>
 <script type="text/javascript" src="js/tinysat-core.js" charset="utf-8"></script>
-<script type="text/javascript" src="js/interface-tinysatviz-sudoku.js" charset="utf-8"></script>
-<script type="text/javascript" src="js/interface-3f.js" charset="utf-8"></script>
+<script type="text/javascript" src="js/interface-tinysatviz-clauses.js" charset="utf-8"></script>
 <script type="text/javascript" src="js/navigation.js"></script>
 <script type="text/javascript">
   insertNav("3f");
