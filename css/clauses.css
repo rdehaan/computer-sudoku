@@ -1,0 +1,41 @@
+/* This file is released under the MIT license.
+See LICENSE.md. */
+
+.clause {
+  display: block;
+  margin-left: 50px;
+  margin-right: 50px;
+  font-size: 15px;
+  border: 1px solid #e8e8e8;
+  border-radius: 3px;
+}
+.clause li {
+  display: inline;
+  padding-right: .3em;
+  padding-left: .3em;
+  margin-left: .2em;
+  margin-right: .2em;
+  border-radius: 3px;
+}
+.literal {
+  font-size: 18px;
+  border: 1px solid #e8e8e8;
+}
+.openlit {
+  background-color: #f8f8f8;
+}
+.truelit {
+  background-color: #efe;
+}
+.falselit {
+  background-color: #fee;
+}
+.openclause {
+  background-color: #eef;
+}
+.trueclause {
+  background-color: #efe;
+}
+.falseclause {
+  background-color: #fee;
+}
