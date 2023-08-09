@@ -6,11 +6,16 @@ solver_running = false;
 input.getSession().on('change', function() {
   localStorage.setItem("page-5d-encoding", input.getValue());
 });
+ex.addEventListener('change', function() {
+ localStorage.setItem("page-5d-encoding-choice", ex.value);
+});
 
 var stored_input = localStorage.getItem("page-5d-encoding");
 if (stored_input) {
   input.setValue(stored_input);
   input.execCommand("gotolineend");
+  ex.value = localStorage.getItem("page-5d-encoding-choice");
+  console.log(localStorage.getItem("page-5d-encoding-choice"));
 } else {
   load_example_from_path("encodings/heuristic3.lp");
 }
@@ -219,6 +224,8 @@ function relead_board() {
 
 function do_reset() {
   if (solver_running) {
+    document.getElementById("pause").disabled = true;
+    document.getElementById("resume").disabled = true;
     window.location.reload();
   } else {
     relead_board();

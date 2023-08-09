@@ -197,6 +197,8 @@ function relead_board() {
 
 function do_reset() {
   if (solver_running) {
+    document.getElementById("pause").disabled = true;
+    document.getElementById("resume").disabled = true;
     window.location.reload();
   } else {
     relead_board();
