@@ -17,7 +17,7 @@ if (stored_input) {
   ex.value = localStorage.getItem("page-5d-encoding-choice");
   console.log(localStorage.getItem("page-5d-encoding-choice"));
 } else {
-  load_example_from_path("encodings/heuristic3.lp");
+  load_example_from_path(ex.value);
 }
 
 // input.container.style.pointerEvents="none";
