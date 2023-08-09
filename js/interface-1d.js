@@ -1,6 +1,8 @@
 // This file is released under the MIT license.
 // See LICENSE.md.
 
+solver_running = false;
+
 function solve() {
   interface_before_start();
   options = "";
@@ -167,6 +169,7 @@ function interface_start() {
   document.getElementById("run").disabled = true;
   document.getElementById("pause").disabled = false;
   board_blocked = true;
+  solver_running = true;
   do_resume();
 }
 function interface_finish() {
@@ -183,10 +186,25 @@ function interface_finish() {
   setTimeout(function() {
     updateOutput();
   }, speed_factor*1000);
+  solver_running = false;
 }
 
-sudoku_initialize_board();
-sudoku_load_from_string("120400300300010050006000100700090000040603000003002000500080700007000005000000098"); // Extremely hard 1
-sudoku_render_board();
+function relead_board() {
+  sudoku_initialize_board();
+  sudoku_load_from_string("120400300300010050006000100700090000040603000003002000500080700007000005000000098"); // Extremely hard 1
+  sudoku_render_board();
+}
+
+function do_reset() {
+  if (solver_running) {
+    window.location.reload();
+  } else {
+    relead_board();
+    clearPrettyOutput();
+    addToPrettyOutput("Ready..");
+  }
+}
+
+relead_board();
 board_blocked = false;
 load_example_from_path("encodings/heuristic3.lp");
