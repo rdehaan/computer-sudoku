@@ -157,9 +157,9 @@ function displayClauses() {
       html_string += "onclick='assignLiteral(" + lit + ")' ";
       html_string += ">";
       if (lit < 0) {
-        html_string += "&not;" + -1*lit;
+        html_string += "&not; x<sub>" + -1*lit + "</sub>";
       } else {
-        html_string += lit;
+        html_string += "x<sub>" + lit + "</sub>";
       }
       html_string += "</li>";
       if (j < clause.length-1) {
