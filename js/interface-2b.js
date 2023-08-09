@@ -52,7 +52,7 @@ function interface_finish() {
 function do_reset() {
   do_abort();
   sudoku_initialize_board();
-  sudoku_load_from_string("070000000201050000053600000084300067500010008730004210000002670000030405000000090");
+  sudoku_load_from_string("120400300300010050006000100700090000040603000003002000500080700007000005000000098"); // Extremely hard 1
   sudoku_render_board();
   board_blocked = false;
   clearPrettyOutput();

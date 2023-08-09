@@ -34,14 +34,20 @@ var list_of_pages = [
   {
     id: "2a",
     chapter: 2,
-    title: "Speed is not enough",
+    title: "Trial and error is effective",
     url: "2a.html",
   },
   {
     id: "2b",
     chapter: 2,
-    title: "Let's unpack the simple algorithm",
+    title: "Speed is not enough",
     url: "2b.html",
+  },
+  {
+    id: "2c",
+    chapter: 2,
+    title: "Let's unpack the simple algorithm",
+    url: "2c.html",
   },
   // CHAPTER 3
   {
