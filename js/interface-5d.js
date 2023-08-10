@@ -2,6 +2,7 @@
 // See LICENSE.md.
 
 solver_running = false;
+num_learned_nogoods = null;
 
 // input.getSession().on('change', function() {
 //   localStorage.setItem("page-5d-encoding", input.getValue());
@@ -203,6 +204,8 @@ function interface_start() {
 }
 function interface_finish() {
   console.log("Interface: finish");
+  addToPrettyOutput("");
+  addToPrettyOutput("(Number of learned clauses: " + num_learned_nogoods + ")");
   document.getElementById("run").disabled = false;
   document.getElementById("pause").disabled = true;
   document.getElementById("resume").disabled = true;
