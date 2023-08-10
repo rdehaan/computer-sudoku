@@ -7,6 +7,8 @@ var pretty_output = "";
 var prettyOutputElement = document.getElementById('pretty-output');
 var outputElement = document.getElementById('output');
 
+var num_learned_clauses = null;
+
 function load_sudoku() {
   if (!board_blocked) {
     sudoku_initialize_board();
@@ -89,6 +91,7 @@ function interface_start() {
   clearPrettyOutput();
   addToPrettyOutput("Solving..");
 
+  num_learned_clauses = 0;
   cur_level = 0;
   cur_assignment = [];
   last_learned = [];
@@ -155,6 +158,7 @@ function interface_conflict(clause) {
 function interface_learned_clause(clause) {
   addToOutput("[" + clause.map(pretty_repr_lit) + "]");
   last_learned = clause;
+  num_learned_clauses++;
 }
 
 function interface_analyze(conflict_graph) {
@@ -188,6 +192,8 @@ function interface_result(result) {
   if (result == "SAT") {
     console.log("SATISFIABLE");
     addToPrettyOutput("Found solution! :)");
+    addToPrettyOutput("");
+    addToPrettyOutput("(Number of learned clauses: " + num_learned_clauses + ")");
   } else if (result == "UNSAT") {
     console.log("UNSATISFIABLE");
   } else if (result == "ABORT") {
