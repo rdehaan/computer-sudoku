@@ -83,8 +83,14 @@ var list_of_pages = [
   {
     id: "3f",
     chapter: 3,
-    title: "Search illustrated",
+    title: "Search illustrated (1)",
     url: "3f.html",
+  },
+  {
+    id: "3g",
+    chapter: 3,
+    title: "Search illustrated (2)",
+    url: "3g.html",
   },
   // CHAPTER 4
   {
