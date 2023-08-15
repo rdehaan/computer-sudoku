@@ -14,6 +14,7 @@ See LICENSE.md.
   <title>How computers solve Sudoku's</title>
 
   <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/sudoku.css">
 </head>
 
 <body>
@@ -68,22 +69,532 @@ See LICENSE.md.
             </p>
 
             <p>
-              The basic patterns are easy to explain.
+              The basic approach is easy to explain.
               For all the cells for which you don't know yet what the solution is, you keep track of the remaining possibilities. Typically, these possibilities are written with pencil as small digits.
               For any cell, you can remove all possible digits for which there is a cell in the same row, column or block that has this digit as a solution.
             </p>
 
             <p>
-              One of the easiest patterns is the following. If there is only one possibility left for some cell, you can conclude that this must be the solution for this cell. This is called a <i>naked single</i>.
+              One of the easiest patterns is the following. If there is only one possibility left for some cell, you can conclude that this must be the solution for this cell. This is called a <i>naked single</i>. Here is an example: the red cell contains a naked single.
             </p>
 
-            <p>TODO: illustration of naked single.</p>
+            <div class="center demonstration">
+              <div id="sudoku" class="sudoku-board">
+                <div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='' disabled>
+                  <div class='candidates'><div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>4</div> <div>&nbsp;</div> <div>6</div> <div>&nbsp;</div> <div>8</div> <div>9</div> </div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='7' disabled>
+                  <div class='candidates'></div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='' disabled>
+                  <div class='candidates'><div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>6</div> <div>&nbsp;</div> <div>8</div> <div>9</div> </div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='' disabled>
+                  <div class='candidates'><div>1</div> <div>2</div> <div>&nbsp;</div> <div>4</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>8</div> <div>9</div> </div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='' disabled>
+                  <div class='candidates'><div>&nbsp;</div> <div>2</div> <div>&nbsp;</div> <div>4</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>8</div> <div>9</div> </div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='' disabled>
+                  <div class='candidates'><div>1</div> <div>&nbsp;</div> <div>3</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>8</div> <div>9</div> </div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='' disabled>
+                  <div class='candidates'><div>1</div> <div>&nbsp;</div> <div>3</div> <div>&nbsp;</div> <div>5</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>8</div> <div>9</div> </div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='' disabled>
+                  <div class='candidates'><div>&nbsp;</div> <div>2</div> <div>3</div> <div>4</div> <div>5</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>8</div> <div>&nbsp;</div> </div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='' disabled>
+                  <div class='candidates'><div>1</div> <div>2</div> <div>3</div> <div>4</div> <div>&nbsp;</div> <div>6</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>9</div> </div>
+                </div><br>
+                <div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='2' disabled>
+                  <div class='candidates'></div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='' disabled>
+                  <div class='candidates'><div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>4</div> <div>&nbsp;</div> <div>6</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>9</div> </div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='1' disabled>
+                  <div class='candidates'></div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='' disabled>
+                  <div class='candidates'><div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>4</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>7</div> <div>8</div> <div>9</div> </div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='5' disabled>
+                  <div class='candidates'></div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='' disabled>
+                  <div class='candidates'><div>&nbsp;</div> <div>&nbsp;</div> <div>3</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>7</div> <div>8</div> <div>9</div> </div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='' disabled>
+                  <div class='candidates'><div>&nbsp;</div> <div>&nbsp;</div> <div>3</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>7</div> <div>8</div> <div>9</div> </div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='' disabled>
+                  <div class='candidates'><div>&nbsp;</div> <div>&nbsp;</div> <div>3</div> <div>4</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>8</div> <div>&nbsp;</div> </div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='' disabled>
+                  <div class='candidates'><div>&nbsp;</div> <div>&nbsp;</div> <div>3</div> <div>4</div> <div>&nbsp;</div> <div>6</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>9</div> </div>
+                </div><br>
+                <div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='' disabled>
+                  <div class='candidates'><div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>4</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>8</div> <div>9</div> </div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='5' disabled>
+                  <div class='candidates'></div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='3' disabled>
+                  <div class='candidates'></div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='6' disabled>
+                  <div class='candidates'></div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='' disabled>
+                  <div class='candidates'><div>&nbsp;</div> <div>2</div> <div>&nbsp;</div> <div>4</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>7</div> <div>8</div> <div>9</div> </div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='' disabled>
+                  <div class='candidates'><div>1</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>7</div> <div>8</div> <div>9</div> </div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='' disabled>
+                  <div class='candidates'><div>1</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>7</div> <div>8</div> <div>9</div> </div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='' disabled>
+                  <div class='candidates'><div>&nbsp;</div> <div>2</div> <div>&nbsp;</div> <div>4</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>8</div> <div>&nbsp;</div> </div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='' disabled>
+                  <div class='candidates'><div>1</div> <div>2</div> <div>&nbsp;</div> <div>4</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>9</div> </div>
+                </div><br>
+                <div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='' disabled>
+                  <div class='candidates'><div>1</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>9</div> </div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='8' disabled>
+                  <div class='candidates'></div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='4' disabled>
+                  <div class='candidates'></div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='3' disabled>
+                  <div class='candidates'></div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='' disabled>
+                  <div class='candidates'><div>&nbsp;</div> <div>2</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>9</div> </div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='' disabled>
+                  <div class='candidates'><div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>5</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>9</div> </div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='' disabled>
+                  <div class='candidates'><div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>5</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>9</div> </div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='6' disabled>
+                  <div class='candidates'></div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='7' disabled>
+                  <div class='candidates'></div>
+                </div><br>
+                <div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='5' disabled>
+                  <div class='candidates'></div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='' disabled>
+                  <div class='candidates'><div>&nbsp;</div> <div>2</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>6</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>9</div> </div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='' disabled>
+                  <div class='candidates'><div>&nbsp;</div> <div>2</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>6</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>9</div> </div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='' disabled>
+                  <div class='candidates'><div>&nbsp;</div> <div>2</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>7</div> <div>&nbsp;</div> <div>9</div> </div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='1' disabled>
+                  <div class='candidates'></div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='' disabled>
+                  <div class='candidates'><div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>6</div> <div>7</div> <div>&nbsp;</div> <div>9</div> </div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='' disabled>
+                  <div class='candidates'><div>&nbsp;</div> <div>&nbsp;</div> <div>3</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>9</div> </div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='' disabled>
+                  <div class='candidates'><div>&nbsp;</div> <div>&nbsp;</div> <div>3</div> <div>4</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> </div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='8' disabled>
+                  <div class='candidates'></div>
+                </div><br>
+                <div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='7' disabled>
+                  <div class='candidates'></div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='3' disabled>
+                  <div class='candidates'></div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='' disabled>
+                  <div class='candidates'><div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>6</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>9</div> </div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='' disabled>
+                  <div class='candidates'><div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>5</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>8</div> <div>9</div> </div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='' disabled>
+                  <div class='candidates'><div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>6</div> <div>&nbsp;</div> <div>8</div> <div>9</div> </div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='4' disabled>
+                  <div class='candidates'></div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='2' disabled>
+                  <div class='candidates'></div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='1' disabled>
+                  <div class='candidates'></div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='' disabled>
+                  <div class='candidates' style="background-color: #fee;"><div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div style="color: #f00">9</div> </div>
+                </div><br>
+                <div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='' disabled>
+                  <div class='candidates'><div>1</div> <div>&nbsp;</div> <div>3</div> <div>4</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>8</div> <div>9</div> </div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='' disabled>
+                  <div class='candidates'><div>1</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>4</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>9</div> </div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='' disabled>
+                  <div class='candidates'><div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>5</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>8</div> <div>9</div> </div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='' disabled>
+                  <div class='candidates'><div>1</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>4</div> <div>5</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>8</div> <div>9</div> </div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='' disabled>
+                  <div class='candidates'><div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>4</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>8</div> <div>9</div> </div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='2' disabled>
+                  <div class='candidates'></div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='6' disabled>
+                  <div class='candidates'></div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='7' disabled>
+                  <div class='candidates'></div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='' disabled>
+                  <div class='candidates'><div>1</div> <div>&nbsp;</div> <div>3</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> </div>
+                </div><br>
+                <div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='' disabled>
+                  <div class='candidates'><div>1</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>6</div> <div>&nbsp;</div> <div>8</div> <div>9</div> </div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='' disabled>
+                  <div class='candidates'><div>1</div> <div>2</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>6</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>9</div> </div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='' disabled>
+                  <div class='candidates'><div>&nbsp;</div> <div>2</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>6</div> <div>7</div> <div>8</div> <div>9</div> </div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='' disabled>
+                  <div class='candidates'><div>1</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>7</div> <div>8</div> <div>9</div> </div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='3' disabled>
+                  <div class='candidates'></div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='' disabled>
+                  <div class='candidates'><div>1</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>6</div> <div>7</div> <div>8</div> <div>9</div> </div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='4' disabled>
+                  <div class='candidates'></div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='' disabled>
+                  <div class='candidates'><div>&nbsp;</div> <div>2</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>8</div> <div>&nbsp;</div> </div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='5' disabled>
+                  <div class='candidates'></div>
+                </div><br>
+                <div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='' disabled>
+                  <div class='candidates'><div>1</div> <div>&nbsp;</div> <div>3</div> <div>4</div> <div>&nbsp;</div> <div>6</div> <div>&nbsp;</div> <div>8</div> <div>&nbsp;</div> </div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='' disabled>
+                  <div class='candidates'><div>1</div> <div>2</div> <div>&nbsp;</div> <div>4</div> <div>&nbsp;</div> <div>6</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> </div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='' disabled>
+                  <div class='candidates'><div>&nbsp;</div> <div>2</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>5</div> <div>6</div> <div>7</div> <div>8</div> <div>&nbsp;</div> </div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='' disabled>
+                  <div class='candidates'><div>1</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>4</div> <div>5</div> <div>&nbsp;</div> <div>7</div> <div>8</div> <div>&nbsp;</div> </div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='' disabled>
+                  <div class='candidates'><div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>4</div> <div>&nbsp;</div> <div>6</div> <div>7</div> <div>8</div> <div>&nbsp;</div> </div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='' disabled>
+                  <div class='candidates'><div>1</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>5</div> <div>6</div> <div>7</div> <div>8</div> <div>&nbsp;</div> </div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='' disabled>
+                  <div class='candidates'><div>1</div> <div>&nbsp;</div> <div>3</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>8</div> <div>&nbsp;</div> </div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='9' disabled>
+                  <div class='candidates'></div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='' disabled>
+                  <div class='candidates'><div>1</div> <div>2</div> <div>3</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> </div>
+                </div>
+              </div>
+            </div>
 
             <p>
-              Another pattern is called a <i>hidden single</i>. This is when in some row, column or block there is only one cell remaining that contains some digit as a possibility. (And no cell in the row, column or block has this digit as a solution yet.) Then this digit must be the solution for this cell.
+              Another pattern is called a <i>hidden single</i>. This is when in some row, column or block there is only one cell remaining that contains some digit as a possibility. (And no cell in the row, column or block has this digit as a solution yet.) Then this digit must be the solution for this cell. Here is an example&mdash;the red cell is the only cell in the top row where a 5 can still occur.
             </p>
 
-            <p>TODO: illustration of hidden single.</p>
+            <div class="center demonstration">
+              <div id="sudoku" class="sudoku-board">
+                <div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='' disabled>
+                  <div class='candidates'><div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>4</div> <div>&nbsp;</div> <div>6</div> <div>&nbsp;</div> <div>8</div> <div>9</div> </div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='7' disabled>
+                  <div class='candidates'></div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='' disabled>
+                  <div class='candidates'><div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>8</div> <div>9</div> </div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='' disabled>
+                  <div class='candidates'><div>1</div> <div>2</div> <div>&nbsp;</div> <div>4</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>8</div> <div>9</div> </div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='' disabled>
+                  <div class='candidates'><div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>4</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>9</div> </div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='' disabled>
+                  <div class='candidates'><div>1</div> <div>&nbsp;</div> <div>3</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>8</div> <div>&nbsp;</div> </div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='' disabled>
+                  <div class='candidates'><div>1</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>8</div> <div>9</div> </div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='' disabled>
+                  <div class='candidates' style="background-color: #fee;"><div>&nbsp;</div> <div>2</div> <div>3</div> <div>&nbsp;</div> <div style="color: #f00;">5</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>8</div> <div>&nbsp;</div> </div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='' disabled>
+                  <div class='candidates'><div>1</div> <div>2</div> <div>3</div> <div>4</div> <div>&nbsp;</div> <div>6</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> </div>
+                </div><br>
+                <div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='2' disabled>
+                  <div class='candidates'></div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='' disabled>
+                  <div class='candidates'><div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>4</div> <div>&nbsp;</div> <div>6</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>9</div> </div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='1' disabled>
+                  <div class='candidates'></div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='' disabled>
+                  <div class='candidates'><div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>4</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>8</div> <div>9</div> </div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='5' disabled>
+                  <div class='candidates'></div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='' disabled>
+                  <div class='candidates'><div>&nbsp;</div> <div>&nbsp;</div> <div>3</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>7</div> <div>8</div> <div>&nbsp;</div> </div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='' disabled>
+                  <div class='candidates'><div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>7</div> <div>8</div> <div>9</div> </div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='' disabled>
+                  <div class='candidates'><div>&nbsp;</div> <div>&nbsp;</div> <div>3</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>8</div> <div>&nbsp;</div> </div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='' disabled>
+                  <div class='candidates'><div>&nbsp;</div> <div>&nbsp;</div> <div>3</div> <div>4</div> <div>&nbsp;</div> <div>6</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> </div>
+                </div><br>
+                <div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='' disabled>
+                  <div class='candidates'><div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>4</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>8</div> <div>9</div> </div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='5' disabled>
+                  <div class='candidates'></div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='3' disabled>
+                  <div class='candidates'></div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='6' disabled>
+                  <div class='candidates'></div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='' disabled>
+                  <div class='candidates'><div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>4</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>7</div> <div>&nbsp;</div> <div>9</div> </div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='' disabled>
+                  <div class='candidates'><div>1</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>7</div> <div>8</div> <div>&nbsp;</div> </div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='' disabled>
+                  <div class='candidates'><div>1</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>7</div> <div>8</div> <div>9</div> </div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='' disabled>
+                  <div class='candidates'><div>&nbsp;</div> <div>2</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>8</div> <div>&nbsp;</div> </div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='' disabled>
+                  <div class='candidates'><div>1</div> <div>2</div> <div>&nbsp;</div> <div>4</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> </div>
+                </div><br>
+                <div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='1' disabled>
+                  <div class='candidates'></div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='8' disabled>
+                  <div class='candidates'></div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='4' disabled>
+                  <div class='candidates'></div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='3' disabled>
+                  <div class='candidates'></div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='2' disabled>
+                  <div class='candidates'></div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='9' disabled>
+                  <div class='candidates'></div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='5' disabled>
+                  <div class='candidates'></div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='6' disabled>
+                  <div class='candidates'></div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='7' disabled>
+                  <div class='candidates'></div>
+                </div><br>
+                <div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='5' disabled>
+                  <div class='candidates'></div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='' disabled>
+                  <div class='candidates'><div>&nbsp;</div> <div>2</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>9</div> </div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='' disabled>
+                  <div class='candidates'><div>&nbsp;</div> <div>2</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>9</div> </div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='7' disabled>
+                  <div class='candidates'></div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='1' disabled>
+                  <div class='candidates'></div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='6' disabled>
+                  <div class='candidates'></div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='3' disabled>
+                  <div class='candidates'></div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='4' disabled>
+                  <div class='candidates'></div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='8' disabled>
+                  <div class='candidates'></div>
+                </div><br>
+                <div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='7' disabled>
+                  <div class='candidates'></div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='3' disabled>
+                  <div class='candidates'></div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='6' disabled>
+                  <div class='candidates'></div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='5' disabled>
+                  <div class='candidates'></div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='8' disabled>
+                  <div class='candidates'></div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='4' disabled>
+                  <div class='candidates'></div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='2' disabled>
+                  <div class='candidates'></div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='1' disabled>
+                  <div class='candidates'></div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='9' disabled>
+                  <div class='candidates'></div>
+                </div><br>
+                <div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='' disabled>
+                  <div class='candidates'><div>&nbsp;</div> <div>&nbsp;</div> <div>3</div> <div>4</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>8</div> <div>9</div> </div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='' disabled>
+                  <div class='candidates'><div>1</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>4</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>9</div> </div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='' disabled>
+                  <div class='candidates'><div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>5</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>8</div> <div>9</div> </div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='' disabled>
+                  <div class='candidates'><div>1</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>4</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>8</div> <div>9</div> </div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='' disabled>
+                  <div class='candidates'><div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>4</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>9</div> </div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='2' disabled>
+                  <div class='candidates'></div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='6' disabled>
+                  <div class='candidates'></div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='7' disabled>
+                  <div class='candidates'></div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='' disabled>
+                  <div class='candidates'><div>1</div> <div>&nbsp;</div> <div>3</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> </div>
+                </div><br>
+                <div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='' disabled>
+                  <div class='candidates'><div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>6</div> <div>&nbsp;</div> <div>8</div> <div>9</div> </div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='' disabled>
+                  <div class='candidates'><div>1</div> <div>2</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>6</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>9</div> </div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='' disabled>
+                  <div class='candidates'><div>&nbsp;</div> <div>2</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>7</div> <div>8</div> <div>9</div> </div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='' disabled>
+                  <div class='candidates'><div>1</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>8</div> <div>9</div> </div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='3' disabled>
+                  <div class='candidates'></div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='' disabled>
+                  <div class='candidates'><div>1</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>7</div> <div>8</div> <div>&nbsp;</div> </div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='4' disabled>
+                  <div class='candidates'></div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='' disabled>
+                  <div class='candidates'><div>&nbsp;</div> <div>2</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>8</div> <div>&nbsp;</div> </div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='5' disabled>
+                  <div class='candidates'></div>
+                </div><br>
+                <div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='' disabled>
+                  <div class='candidates'><div>&nbsp;</div> <div>&nbsp;</div> <div>3</div> <div>4</div> <div>&nbsp;</div> <div>6</div> <div>&nbsp;</div> <div>8</div> <div>&nbsp;</div> </div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='' disabled>
+                  <div class='candidates'><div>1</div> <div>2</div> <div>&nbsp;</div> <div>4</div> <div>&nbsp;</div> <div>6</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> </div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='' disabled>
+                  <div class='candidates'><div>&nbsp;</div> <div>2</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>5</div> <div>&nbsp;</div> <div>7</div> <div>8</div> <div>&nbsp;</div> </div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='' disabled>
+                  <div class='candidates'><div>1</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>4</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>8</div> <div>&nbsp;</div> </div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='' disabled>
+                  <div class='candidates'><div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>4</div> <div>&nbsp;</div> <div>6</div> <div>7</div> <div>&nbsp;</div> <div>&nbsp;</div> </div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='' disabled>
+                  <div class='candidates'><div>1</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>5</div> <div>&nbsp;</div> <div>7</div> <div>8</div> <div>&nbsp;</div> </div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='' disabled>
+                  <div class='candidates'><div>1</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>8</div> <div>&nbsp;</div> </div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='9' disabled>
+                  <div class='candidates'></div>
+                </div><div class='sudoku-board-cell'>
+                  <input type='text' pattern='\d*' novalidate value='' disabled>
+                  <div class='candidates'><div>1</div> <div>2</div> <div>3</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> <div>&nbsp;</div> </div>
+                </div>
+              </div>
+            </div>
 
             <p>
               These are only two very simple examples of patterns.
