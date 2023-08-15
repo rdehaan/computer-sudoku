@@ -31,28 +31,96 @@ See LICENSE.md.
       <article class="post">
 
         <header class="post-header">
-          <h1 class="post-title">Computers can solve hard Sudoku's really quickly</h1>
+          <h1 class="post-title">Solving hard Sudoku's really quickly</h1>
         </header>
 
         <div class="post-content">
           <div>
 
-            <h2>Lorem</h2>
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Cursus turpis massa tincidunt dui ut ornare lectus sit. Mattis aliquam faucibus purus in. Mattis ullamcorper velit sed ullamcorper morbi tincidunt ornare massa. Pretium lectus quam id leo in vitae. Eu tincidunt tortor aliquam nulla. Tellus elementum sagittis vitae et leo duis ut. Vitae turpis massa sed elementum tempus egestas sed. Nibh sit amet commodo nulla facilisi. Nunc mi ipsum faucibus vitae aliquet nec ullamcorper sit. Nisl purus in mollis nunc. Neque viverra justo nec ultrices dui sapien eget mi proin. Lacus sed turpis tincidunt id aliquet risus. Malesuada fames ac turpis egestas. Ultrices sagittis orci a scelerisque purus semper. Augue mauris augue neque gravida in.
-            </p>
-
-            <h3>Idem</h3>
-            <p>
-              Massa sed elementum tempus egestas sed sed. Euismod quis viverra nibh cras pulvinar mattis nunc sed blandit. Et tortor consequat id porta nibh venenatis cras sed felis. Aliquam etiam erat velit scelerisque in dictum. Nisi quis eleifend quam adipiscing vitae proin sagittis. Neque viverra justo nec ultrices dui sapien eget mi. Porttitor massa id neque aliquam vestibulum morbi blandit cursus risus. Massa ultricies mi quis hendrerit dolor magna eget est. Accumsan tortor posuere ac ut. Et malesuada fames ac turpis egestas. Eu nisl nunc mi ipsum faucibus. Faucibus scelerisque eleifend donec pretium vulputate sapien. Tincidunt id aliquet risus feugiat in ante metus dictum at. Metus aliquam eleifend mi in. Quis viverra nibh cras pulvinar mattis. Egestas congue quisque egestas diam in arcu cursus euismod. Dictumst vestibulum rhoncus est pellentesque elit.
+              With a computer, you can solve Sudoku puzzles much, much faster than with pencil and paper&mdash;even the hardest ones. That's the claim that we're going to investigate in this explainer.
             </p>
 
             <p>
-              Ipsum faucibus vitae aliquet nec ullamcorper sit amet risus nullam. Viverra accumsan in nisl nisi scelerisque eu ultrices. Natoque penatibus et magnis dis. Leo vel fringilla est ullamcorper. Semper eget duis at tellus at. Lacus viverra vitae congue eu consequat ac. Metus dictum at tempor commodo. Sem nulla pharetra diam sit amet nisl suscipit. At consectetur lorem donec massa sapien faucibus. Purus semper eget duis at tellus at urna condimentum. Tellus at urna condimentum mattis pellentesque id nibh. Sed augue lacus viverra vitae. Quis auctor elit sed vulputate mi sit amet mauris commodo. Enim diam vulputate ut pharetra sit amet aliquam id diam.
+              This claim raises several basic questions.
+              When do we call a Sudoku puzzle hard?
+              How come computers can solve these hard puzzles so quickly?
+              And why do we care about solving these hard Sudoku puzzles so quickly in the first place?
+              Let's start with some (first) answers to these questions.
+            </p>
+
+            <h2>Human strategies</h2>
+
+            <p>
+              Sudoku puzzles are mainly a form of entertainment for humans.
+              Solving them can be seen as a form of mental gymnastics,
+              where you repeatedly have to find one of various patterns
+              that allow you to draw conclusions about the solution,
+              until you have.
+              Most Sudoku puzzles can be solved in this way, using different patterns, some more complicated than others.
+              This process of solving Sudoku puzzles is enjoyable and feels satisfying for many people.
             </p>
 
             <p>
-              Amet nulla facilisi morbi tempus iaculis urna id volutpat. Gravida dictum fusce ut placerat orci nulla pellentesque. Turpis nunc eget lorem dolor sed. Venenatis a condimentum vitae sapien pellentesque habitant morbi. Aliquet nibh praesent tristique magna sit amet purus gravida quis. Vitae justo eget magna fermentum iaculis eu non. Quam quisque id diam vel quam elementum pulvinar etiam. Porttitor rhoncus dolor purus non enim. Enim facilisis gravida neque convallis a. Est placerat in egestas erat imperdiet sed euismod nisi. Vulputate odio ut enim blandit. Malesuada fames ac turpis egestas maecenas pharetra.
+              Sudoku puzzles are typically given a difficulty rating.
+              This rating is based on how complicated the patterns are that you have to find in order to get to the solution.
+              There is no unique way of assigning a difficulty score to a Sudoku puzzle. There are several difficulty ratings for Sudoku puzzles that are commonly used in the online community, and different publishers of Sudoku puzzle books use different difficulty rating methods. What these ratings all have in common is that they are based on how difficult it is for humans to find the different patterns.
+            </p>
+
+            <p>
+              The basic patterns are easy to explain.
+              For all the cells for which you don't know yet what the solution is, you keep track of the remaining possibilities. Typically, these possibilities are written with pencil as small digits.
+              For any cell, you can remove all possible digits for which there is a cell in the same row, column or block that has this digit as a solution.
+            </p>
+
+            <p>
+              One of the easiest patterns is the following. If there is only one possibility left for some cell, you can conclude that this must be the solution for this cell. This is called a <i>naked single</i>.
+            </p>
+
+            <p>TODO: illustration of naked single.</p>
+
+            <p>
+              Another pattern is called a <i>hidden single</i>. This is when in some row, column or block there is only one cell remaining that contains some digit as a possibility. (And no cell in the row, column or block has this digit as a solution yet.) Then this digit must be the solution for this cell.
+            </p>
+
+            <p>TODO: illustration of hidden single.</p>
+
+            <p>
+              These are only two very simple examples of patterns.
+              There are many <a href="https://sudoku.com/sudoku-rules/">more of them</a>, and they can get quite complicated to spot.
+            </p>
+
+            <h2>Using the advantages of computers</h2>
+
+            <p>
+              Computers can solve Sudoku puzzles very differently from humans.
+              This is because computers are very good at doing several things that are hard for humans.
+              One of these things is pattern matching. If you spell out what the patterns are that the computer has to look for, it can find these very efficiently, whereas humans have a harder time to find these patterns in a sea of digits.
+            </p>
+
+            <p>
+              Another thing that computers are very good at is keeping administration. When you run out of patterns to spot, and you can't draw any more conclusions about the solution, you can just try putting some digit somewhere&mdash;guessing. If this leads to a solution, great! If not, you just go back, and rule out the possibility that you tried. This is called <i>backtracking search</i>. In order to make this work, you have to keep track of what conclusions depend on what guesses, and in what order you did the guessing. You can also do this with pen and paper, but it's a lot of administration to keep, and computers are very good at this.
+            </p>
+
+            <p>
+              By just using the brute speed of, say, a laptop computer, even a simple backtracking search algorithm can solve the hardest Sudoku's in a matter of minutes. It is relatively easy to improve this to a matter of seconds, by adding a few of the simplest patterns that humans use: naked singles and hidden singles.
+              More intelligently designed algorithms can do even better: they can solve even the hardest Sudoku's in a matter of milliseconds.
+            </p>
+
+            <h2>Sudoku puzzles as a case study</h2>
+
+            <p>
+              You might ask why it is so important to solve Sudoku puzzles so quickly? It isn't, really. A big part of the appeal of Sudoku puzzles is the solving process, as a form of entertainment. And even if you only care about finding the solution, probably the basic backtracking algorithms (with a few extra tricks sprinkled in) are good enough for Sudoku puzzles.
+            </p>
+
+            <p>
+              Sudoku puzzles are simply a (small) showcase example to illustrate intelligently designed search algorithms that employ reasoning about the problem. For search problems 'in the wild', the search space is typically even much larger.
+              Think of finding a charging strategy to ensure that your fleet of hundreds of warehouse robots do not run out power, with a limited number of charging stations, for example. The number of possible strategies here is astronomical.
+            </p>
+
+            <p>
+              For such larger search problems, it is important to design intelligent algorithms if you want to find a solution quickly.
+              You can see this already when you go to larger Sudoku puzzles. For 16 &times; 16 or 25 &times; 25 Sudoku puzzles, the unsophisticated algorithms already take an enormous amount of time on the harder puzzles.
             </p>
 
           </div>

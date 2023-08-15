@@ -6,7 +6,7 @@ var list_of_pages = [
   {
     id: "1a",
     chapter: 1,
-    title: "Computers can solve hard Sudoku's really quickly",
+    title: "Solving hard Sudoku's really quickly",
     url: "1a.html",
   },
   {
