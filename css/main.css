@@ -411,3 +411,8 @@ pre {
 .center {
   text-align:center;
 }
+
+.demonstration {
+  padding-top: 2em;
+  padding-bottom: 2em;
+}

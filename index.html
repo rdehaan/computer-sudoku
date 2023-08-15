@@ -42,21 +42,53 @@ See LICENSE.md.
         <div class="post-content">
           <div>
 
-            <ul>
-              <li>Surely you've seen the hype with AI learning, but computers can do more intelligent things than extract patterns from large amounts of data.</li>
-              <li>One example is to solve search problems by reasoning about them, learning from this reasoning, and using the learned information to find a solution.</li>
-              <li>This is a branch of CS & AI that doesn't get as much attention in the media these days.</li>
-              <li>We will explain how this works with the example of Sudoku puzzles, which you probably have seen at some point in your local newspaper.</li>
-              <li>In this explainer, you will get an insight into how this works. I will tell you how computers can solve search problems like Sudoku puzzles incredibly fast. I will tell you what concepts and algorithms underlie this problem solving ability.</li>
-            </ul>
-            <h3>A sneak preview</h3>
-            <p>asdf</p>
-            <ul>
-              <li>I will also give you (interactive) demonstrations that illustrate how this problem solving works for the example of Sudoku puzzles.<br />&nbsp;</li>
-              <li>This explainer is best viewed on a computer with a modern browser&mdash;otherwise the demonstrations might not work properly.</li>
-            </ul>
+            <p>
+              Surely you have seen how computers' ability to extract patterns from large amounts of data has recently been <a href="https://www.scientificamerican.com/article/we-need-to-focus-on-ais-real-harms-not-imaginary-existential-risks/">hyped</a> in the media and popular culture. This is certainly useful for some applications, but is certainly <a href="https://www.goodreads.com/book/show/13587160-to-save-everything-click-here">not a cure-all</a>, nor does it cover all intelligent types of computation. There are also many other intelligent algorithms that can be classified under the umbrella term <i>Artificial Intelligence</i>. This explainer is about one type of such intelligent algorithms.
+            </p>
 
-            <div class="center">
+            <p>
+              The algorithms that we will see solve search problems in an ingenous way. One can think about them as reasoning about the problem, learning from this reasoning, and using the learned information to find a solution. We will explain how this works with the example of <a href="https://en.wikipedia.org/wiki/Sudoku">Sudoku puzzles</a>.
+            </p>
+
+            <h3>Sudoku</h3>
+            <p>
+              For those that have never seen a Sudoku puzzle,
+              it a type of puzzle where you have to complete a 9 &times; 9 grid, filling each cell with the digits 1 to 9 in such a way
+              that (i) each row contains all nine different digits,
+              (ii) each column contains all nine different digits,
+              and (iii) each of the nine 3 &times; 3 subgrids
+              contains all nine different digits.
+              In the past few decades, these puzzles have grown enormously popular.
+              You can very likely find them on the back pages of your local newspaper.
+              There is an example of a Sudoku puzzle <a href="#sudoku-example">below</a>.
+            </p>
+
+            <p>
+              Sudoku puzzles are a neat and clean example of a search problem.
+              There is a clearly defined solution, and the task is simply to find it.
+              This is not necessarily an easy task, because there are many possible solutions. In computer science terminology, we say that the search space is large. You can compare it to finding a needle in a haystack.
+            </p>
+
+            <p>
+              There are Sudoku puzzles in all kinds of difficulty levels.
+              For the hardest ones, it can take humans hours (or more) to solve them.
+              Computers can solve even these hardest puzzles very quickly, in a matter of milliseconds.
+              They do so by combining their speed in carrying out calculations with intelligent algorithms.
+            </p>
+
+            <a name="sudoku-example"></a>
+            <h3>A sneak preview</h3>
+
+            <p>
+              In this explainer, you will get an insight into how this works. I will tell you how computers can solve search problems like Sudoku puzzles in an intelligent way. I will tell you what concepts and algorithms underlie this problem solving ability.
+            </p>
+
+            <p>
+              I will also give you (interactive) demonstrations that illustrate how this problem solving works for the example of Sudoku puzzles.
+              As a quick preview, here is one such demonstration. Click on "Run!" to see a (slow motion) visualization of how an algorithm solves the Sudoku puzzle below.
+            </p>
+
+            <div class="center demonstration">
 
               <div style="display: none;">
                 <ul class="hlist">
@@ -110,12 +142,19 @@ See LICENSE.md.
 
             </div>
 
+            <p>
+              (<i>Note:</i> This explainer is best viewed on a computer with a modern browser&mdash;otherwise the demonstrations might not work properly.)
+            </p>
+
             <h3>Ready?</h3>
 
-            <p><a href="1a.html">&rArr; Let's get started!</a></p>
+            <p>
+              Are you ready to dive in?
+              Then <a href="1a.html">let's get started &rArr;</a> with the explainer!</p>
 
-            <p>(If you would rather get an overview first,
-              have a look at the <a href="toc.html">table of contents</a>.)
+            <p>
+              (If you would rather get an overview of the different parts of the explainer first,
+              then have a look at the <a href="toc.html">table of contents</a>.)
             </p>
 
           </div>
