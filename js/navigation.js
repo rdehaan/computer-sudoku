@@ -144,6 +144,7 @@ var list_of_pages = [
 function insertTOC() {
   var chapter = 0;
   var html_string = "";
+  html_string += "<a href='index.html'>Introduction</a>"
   for (let i = 0; i < list_of_pages.length; i++) {
     var page_obj = list_of_pages[i];
     if (page_obj.chapter > chapter) {
