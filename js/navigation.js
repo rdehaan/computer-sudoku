@@ -39,7 +39,7 @@ var list_of_pages = [
   {
     id: "2c",
     chapter: 2,
-    title: "Let's unpack the simple algorithm",
+    title: "Let's unpack the backtracking algorithm",
     url: "2c.html",
   },
   // CHAPTER 3
