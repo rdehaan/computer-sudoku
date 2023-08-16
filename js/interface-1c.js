@@ -4,6 +4,7 @@
 solver_running = false;
 
 function solve() {
+  do_reset();
   interface_before_start();
   options = "";
   var index = document.getElementById("mode").selectedIndex;

@@ -34,6 +34,7 @@ input.setOptions({
 // input.blur()
 
 function solve() {
+  do_reset();
   interface_before_start();
   options = "";
   var index = document.getElementById("mode").selectedIndex;
