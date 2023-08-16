@@ -416,3 +416,7 @@ pre {
   padding-top: 2em;
   padding-bottom: 2em;
 }
+
+.sidenote {
+  color: #888;
+}

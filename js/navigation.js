@@ -12,23 +12,16 @@ var list_of_pages = [
   {
     id: "1b",
     chapter: 1,
-    title: "What will we explain?",
-    url: "1b.html",
-    // Link to ToC
-  },
-  {
-    id: "1c",
-    chapter: 1,
     title: "Let's use some examples",
-    url: "1c.html",
+    url: "1b.html",
     // Extremely hard 1,
     // rating of 99529 by one of the most widely used sudoku rating programs online (gsf's sudoku q1)
   },
   {
-    id: "1d",
+    id: "1c",
     chapter: 1,
     title: "A demonstration",
-    url: "1d.html",
+    url: "1c.html",
   },
   // CHAPTER 2
   {
