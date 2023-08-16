@@ -1,6 +1,8 @@
 // This file is released under the MIT license.
 // See LICENSE.md.
 
+solution_reached = true;
+
 function interface_new_board(new_board) {
   console.log("Interface: new board");
   board = new_board;
@@ -24,6 +26,10 @@ function interface_model(board) {
 }
 
 function interface_before_start() {
+  if (solution_reached) {
+    do_reset();
+  }
+  solution_reached = false;
   console.log("Interface: before start");
   clearPrettyOutput();
   addToPrettyOutput("Solving..");
@@ -47,6 +53,7 @@ function interface_finish() {
   document.getElementById("pause").disabled = true;
   document.getElementById("resume").disabled = true;
   board_blocked = false;
+  solution_reached = true;
 }
 
 function do_reset() {
