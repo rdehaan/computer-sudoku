@@ -27,7 +27,7 @@ var list_of_pages = [
   {
     id: "2a",
     chapter: 2,
-    title: "Trial and error is effective",
+    title: "Trial and error is (often) effective",
     url: "2a.html",
   },
   {
