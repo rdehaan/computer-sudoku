@@ -33,7 +33,7 @@ var list_of_pages = [
   {
     id: "2b",
     chapter: 2,
-    title: "Speed is not enough",
+    title: "Speed is not always enough",
     url: "2b.html",
   },
   {
