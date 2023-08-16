@@ -239,7 +239,7 @@ function renderOutput() {
     addToPrettyOutput("Keep going..");
   } else if (num_clauses_false == 0) {
     addToOutput("Formula satisfied? Yes!\n");
-    addToPrettyOutput("Found satisfying assignment!");
+    addToPrettyOutput("Found a satisfying assignment!");
   } else {
     addToOutput("Formula satisfied? No!\n");
     addToPrettyOutput("Not a satisfying assignment!");

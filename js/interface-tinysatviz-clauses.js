@@ -237,7 +237,7 @@ function interface_result(result) {
   if (result == "SAT") {
     console.log("SATISFIABLE");
     addToOutput("Found a satisfying assignment: [" + cur_assignment.map(obj => obj.lit) + "]");
-    addToPrettyOutput("Found satisfying assignment!");
+    addToPrettyOutput("Found a satisfying assignment!");
   } else if (result == "UNSAT") {
     console.log("UNSATISFIABLE");
     addToOutput("No more choices to undo, formula is unsatisfiable!");
