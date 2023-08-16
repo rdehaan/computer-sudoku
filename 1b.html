@@ -39,9 +39,24 @@ See LICENSE.md.
         <div class="post-content">
           <div>
 
-            <h2>Lorem</h2>
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Cursus turpis massa tincidunt dui ut ornare lectus sit. Mattis aliquam faucibus purus in. Mattis ullamcorper velit sed ullamcorper morbi tincidunt ornare massa. Pretium lectus quam id leo in vitae. Eu tincidunt tortor aliquam nulla. Tellus elementum sagittis vitae et leo duis ut. Vitae turpis massa sed elementum tempus egestas sed. Nibh sit amet commodo nulla facilisi. Nunc mi ipsum faucibus vitae aliquet nec ullamcorper sit. Nisl purus in mollis nunc. Neque viverra justo nec ultrices dui sapien eget mi proin. Lacus sed turpis tincidunt id aliquet risus. Malesuada fames ac turpis egestas. Ultrices sagittis orci a scelerisque purus semper. Augue mauris augue neque gravida in.
+              Many Sudoku puzzles can be solved using a handful of patterns, without needing to search for the solution, really. In fact, if you get to know these <a href="https://sudoku.com/sudoku-rules/">patterns</a> and practice a while, you can solve nearly all Sudoku puzzles that you will find in newspapers. Because pattern matching is one of their strong suits, computers can solve such Sudoku puzzles in no time.
+            </p>
+
+            <p>
+              It gets much more interesting for harder Sudoku puzzles. In the rest of the explainer, we will use two example Sudoku puzzles as examples, one even harder than the other.
+            </p>
+
+            <p>
+              To give you a bit of an indication of how hard these example Sudoku puzzles are, let's consider one way of rating the difficulty of Sudoku puzzles. This rating is based on <a href="https://hodoku.sourceforge.net/en/index.php">HoDoKu</a>, an application that you can use to train different (human) solving techniques for Sudoku puzzles. HoDoKu assigns each Sudoku puzzle a difficulty rating that is based on how complicated the patterns are that are needed to solve the puzzle.
+            </p>
+
+            <p>
+              The hardest puzzles that you will find in newspapers typically have a HoDoKu difficulty rating that is below 1000. Even the most basic computer algorithms can solve such Sudoku puzzles very quickly. For this explainer, we will look at two examples that are much harder.
+            </p>
+
+            <p>
+              The first example (Example A) has a HoDoKu difficulty rating of 1836.
             </p>
 
           </div>
@@ -55,7 +70,7 @@ See LICENSE.md.
           <div>
 
             <p>
-              Amet nulla facilisi morbi tempus iaculis urna id volutpat. Gravida dictum fusce ut placerat orci nulla pellentesque. Turpis nunc eget lorem dolor sed. Venenatis a condimentum vitae sapien pellentesque habitant morbi. Aliquet nibh praesent tristique magna sit amet purus gravida quis. Vitae justo eget magna fermentum iaculis eu non. Quam quisque id diam vel quam elementum pulvinar etiam. Porttitor rhoncus dolor purus non enim. Enim facilisis gravida neque convallis a. Est placerat in egestas erat imperdiet sed euismod nisi. Vulputate odio ut enim blandit. Malesuada fames ac turpis egestas maecenas pharetra.
+              The second example (Example B) has a HoDoKu difficulty rating of 18134. To solve this second example, even the hardest-to-spot and most complicated patterns are not enough, and you really need to do the hard work of searching for a solution.
             </p>
 
           </div>
@@ -66,6 +81,10 @@ See LICENSE.md.
             <div class="sudoku-board"></div>
 
           </div>
+
+          <p>
+            This extremely hard second example is still no match for the most intelligent computer algorithms. Let's demonstrate this, before we dive into the working of the different computer algorithms.
+          </p>
         </div>
 
       </article>
