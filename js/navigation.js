@@ -52,7 +52,7 @@ var list_of_pages = [
   {
     id: "3b",
     chapter: 3,
-    title: "A primer in propositional logic and SAT",
+    title: "Propositional logic and SAT in a nutshell",
     url: "3b.html",
   },
   {
