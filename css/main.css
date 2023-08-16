@@ -420,3 +420,11 @@ pre {
 .sidenote {
   color: #888;
 }
+
+ul.display li {
+  margin-bottom: 5px;
+}
+
+ul.display ul {
+  margin-bottom: 5px;
+}
