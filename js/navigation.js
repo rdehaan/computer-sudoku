@@ -20,7 +20,7 @@ var list_of_pages = [
   {
     id: "1c",
     chapter: 1,
-    title: "A demonstration",
+    title: "Demonstrating intelligent search",
     url: "1c.html",
   },
   // CHAPTER 2
