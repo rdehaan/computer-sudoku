@@ -37,22 +37,196 @@ See LICENSE.md.
         <div class="post-content">
           <div>
 
-            <h2>Lorem</h2>
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Cursus turpis massa tincidunt dui ut ornare lectus sit. Mattis aliquam faucibus purus in. Mattis ullamcorper velit sed ullamcorper morbi tincidunt ornare massa. Pretium lectus quam id leo in vitae. Eu tincidunt tortor aliquam nulla. Tellus elementum sagittis vitae et leo duis ut. Vitae turpis massa sed elementum tempus egestas sed. Nibh sit amet commodo nulla facilisi. Nunc mi ipsum faucibus vitae aliquet nec ullamcorper sit. Nisl purus in mollis nunc. Neque viverra justo nec ultrices dui sapien eget mi proin. Lacus sed turpis tincidunt id aliquet risus. Malesuada fames ac turpis egestas. Ultrices sagittis orci a scelerisque purus semper. Augue mauris augue neque gravida in.
-            </p>
-
-            <h3>Idem</h3>
-            <p>
-              Massa sed elementum tempus egestas sed sed. Euismod quis viverra nibh cras pulvinar mattis nunc sed blandit. Et tortor consequat id porta nibh venenatis cras sed felis. Aliquam etiam erat velit scelerisque in dictum. Nisi quis eleifend quam adipiscing vitae proin sagittis. Neque viverra justo nec ultrices dui sapien eget mi. Porttitor massa id neque aliquam vestibulum morbi blandit cursus risus. Massa ultricies mi quis hendrerit dolor magna eget est. Accumsan tortor posuere ac ut. Et malesuada fames ac turpis egestas. Eu nisl nunc mi ipsum faucibus. Faucibus scelerisque eleifend donec pretium vulputate sapien. Tincidunt id aliquet risus feugiat in ante metus dictum at. Metus aliquam eleifend mi in. Quis viverra nibh cras pulvinar mattis. Egestas congue quisque egestas diam in arcu cursus euismod. Dictumst vestibulum rhoncus est pellentesque elit.
+              <a href="https://en.wikipedia.org/wiki/Propositional_calculus">Propositional logic</a> is a mathematical language that talks about propositions. Propositions are statements that can be true or false. A good example of a proposition is the statement "January 1, 1970 was a Wednesday." (This statement happens to be false. It was a Thursday.)
             </p>
 
             <p>
-              Ipsum faucibus vitae aliquet nec ullamcorper sit amet risus nullam. Viverra accumsan in nisl nisi scelerisque eu ultrices. Natoque penatibus et magnis dis. Leo vel fringilla est ullamcorper. Semper eget duis at tellus at. Lacus viverra vitae congue eu consequat ac. Metus dictum at tempor commodo. Sem nulla pharetra diam sit amet nisl suscipit. At consectetur lorem donec massa sapien faucibus. Purus semper eget duis at tellus at urna condimentum. Tellus at urna condimentum mattis pellentesque id nibh. Sed augue lacus viverra vitae. Quis auctor elit sed vulputate mi sit amet mauris commodo. Enim diam vulputate ut pharetra sit amet aliquam id diam.
+              Instead of concrete propositions like the one above, propositional logic uses <i>propositional variables</i>. These are often written with symbols, like <i>x<sub>1</sub></i>, <i>x<sub>2</sub></i>, etc. The idea is that these are placeholders for actual propositions. The motivation behind this is that we can express all kinds of statements, without having to decide in advance what the actual propositions are.
             </p>
 
             <p>
-              Amet nulla facilisi morbi tempus iaculis urna id volutpat. Gravida dictum fusce ut placerat orci nulla pellentesque. Turpis nunc eget lorem dolor sed. Venenatis a condimentum vitae sapien pellentesque habitant morbi. Aliquet nibh praesent tristique magna sit amet purus gravida quis. Vitae justo eget magna fermentum iaculis eu non. Quam quisque id diam vel quam elementum pulvinar etiam. Porttitor rhoncus dolor purus non enim. Enim facilisis gravida neque convallis a. Est placerat in egestas erat imperdiet sed euismod nisi. Vulputate odio ut enim blandit. Malesuada fames ac turpis egestas maecenas pharetra.
+              (Later, when encoding Sudoku puzzles into logic, we will use propositions like "The cell in row 4 and column 6 contains the digit 8." But for now, we will stick to the abstract placeholders <i>x<sub>i</sub></i>.)
+            </p>
+
+            <p>
+              Using propositional variables as basic building blocks, you can express more complicated statements in the language. This is done by combining smaller statements into larger ones using <i>connectives</i>.
+            </p>
+
+            <p>
+              I already mentioned that propositional logic is a mathematical languages. Mathematicians (and computer scientists) like to be very precise. This means that they distinguish (i) what you are allowed to express in the language (called the <i>syntax</i>), and (ii) what the different expressions mean (called the <i>semantics</i>). Let's be precise, and use these terms too.
+            </p>
+
+            <h2>Syntax</h2>
+            <p>
+              The syntax of propositional logic says what are expressions in the language. These expressions in the language are called <i>propositional logic formulas</i> (or <i>formulas</i>, for short). So some things are formulas, and other things are not.
+            </p>
+
+            <p>
+              So what is a formula? A propositional variable <i>x<sub>i</sub></i> is a formula. And what you can build from smaller formulas using connectives are formulas. And that's everything that is a  formula. So what are these connectives and how to they work?
+            </p>
+
+            <p>
+              There are three basic connectives: OR, AND and NOT. These are often written with symbols: &or; means OR, &and; means AND, and &not; means NOT. The connectives OR and AND both take two formulas and join them together into a single larger formula. You put the OR/AND connective in the middle. For example, (<i>x<sub>1</sub></i> &and; <i>x<sub>2</sub></i>) is a formula. (The parentheses are optional.) NOT takes a single formula and makes it into a larger formula. You put the NOT connective on the left. For example, (&not;<i>x<sub>3</sub></i>) is a formula.
+            </p>
+
+            <p>
+              This describes exactly what are formulas. Everything that you can build in this way is a formula, and everything else is not a formula. For example (<i>x<sub>1</sub></i> &and; &not;&not;<i>x<sub>2</sub></i>) is a formula, and (&not;&and;<i>x<sub>1</sub></i>) is not a formula.
+            </p>
+
+            <p>
+              (There are also fancy names for the connectives. <i>Disjunction</i> is a fancy word for OR. <i>Conjunction</i> is a fancy word for AND. And <i>negation</i> is a fancy word for NOT.)
+            </p>
+
+            <h2>Semantics</h2>
+            <p>
+              Let's now turn to the semantics, or the meaning of formulas. In propositional logic, we can only talk about true and false. The meaning of a formula just talks about the truth or falsehood of formulas. So if we explain when a formula is true and when it is false, then that's the meaning of the formula.
+            </p>
+
+            <p>
+              To talk about when a formula is true or false, we think about possible worlds. A possible world is simply a possible way of making the different propositional variables true or false. This is also called a <i>truth assignment</i>: a way of assigning true or false to each propositional variable. For example, if there are two propositional variables, <i>x<sub>1</sub></i> and <i>x<sub>2</sub></i>, then making <i>x<sub>1</sub></i> true and making <i>x<sub>2</sub></i> false is one example of a truth assignment. We can write this example truth assignment using symbols like this: { <i>x<sub>1</sub></i> &mapsto; 1, <i>x<sub>2</sub></i> &mapsto; 0 }. (Computer scientists use 1 for true and 0 for false.)
+            </p>
+
+            <p>
+              It's clear when a truth assignment makes a propositional variable <i>x<sub>i</sub></i> true. But when do truth assigments make larger formulas true or false? To explain this, we will use <i>truth tables</i>. Each of the connectives has their own truth table. I'll show them to you, and then explain what they mean.
+            </p>
+
+            <div class="center demonstration">
+              <table style="margin-left: auto; margin-right: auto; padding-bottom: 1em;">
+                <tr >
+                  <td style="border-bottom: 2px solid #808080; width: 3em;">&phi;<sub>1</sub></td>
+                  <td style="border-bottom: 2px solid #808080; width: 3em;">&phi;<sub>2</sub></td>
+                  <td style="border-bottom: 2px solid #808080; width: 6em;">&phi;<sub>1</sub> &or; &phi;<sub>2</sub></td>
+                </tr>
+                <tr>
+                  <td>0</td>
+                  <td>0</td>
+                  <td style="border-left: 2px solid #808080;">0</td>
+                </tr>
+                <tr>
+                  <td>0</td>
+                  <td>1</td>
+                  <td style="border-left: 2px solid #808080;">1</td>
+                </tr>
+                <tr>
+                  <td>1</td>
+                  <td>0</td>
+                  <td style="border-left: 2px solid #808080;">1</td>
+                </tr>
+                <tr>
+                  <td>1</td>
+                  <td>1</td>
+                  <td style="border-left: 2px solid #808080;">1</td>
+                </tr>
+              </table>
+              <p>Truth table for OR</p>
+            </div>
+
+            <p>
+              Let's start with the truth table for OR. Suppose you have two smaller formulas &phi;<sub>1</sub> and &phi;<sub>2</sub>, the combined formula (&phi;<sub>1</sub> &or; &phi;<sub>2</sub>), and some truth assignment. Then to see if the truth assignment makes the combined formula true, you do the following. You first see if it makes the smaller formulas true or false. You then find the right row in the truth table. And then you read off in the right column of the truth table whether the combined formula is true or false.
+            </p>
+
+            <p>
+              Let's take an example. Take the formula (<i>x<sub>1</sub></i> &or; <i>x<sub>2</sub></i>) and take the truth assignment { <i>x<sub>1</sub></i> &mapsto; 1, <i>x<sub>2</sub></i> &mapsto; 0 }. So then &phi;<sub>1</sub> = <i>x<sub>1</sub></i>, &phi;<sub>2</sub> = <i>x<sub>2</sub></i>, and (&phi;<sub>1</sub> &or; &phi;<sub>2</sub>) = (<i>x<sub>1</sub></i> &or; <i>x<sub>2</sub></i>). We then find the right row in the truth table. The truth assignment makes <i>x<sub>1</sub></i> true and <i>x<sub>2</sub></i> false. This is the third row. Now we look at the right of this row, and we see that the truth assignment makes (<i>x<sub>1</sub></i> &or; <i>x<sub>2</sub></i>) true.
+            </p>
+
+            <p>
+              In other words, the truth table for OR says that a formula (&phi;<sub>1</sub> &or; &phi;<sub>2</sub>) is made true exactly when at least one of the formulas &phi;<sub>1</sub> and &phi;<sub>2</sub> are made true.
+            </p>
+
+            <div class="center demonstration">
+              <table style="margin-left: auto; margin-right: auto; padding-bottom: 1em;">
+                <tr >
+                  <td style="border-bottom: 2px solid #808080; width: 3em;">&phi;<sub>1</sub></td>
+                  <td style="border-bottom: 2px solid #808080; width: 3em;">&phi;<sub>2</sub></td>
+                  <td style="border-bottom: 2px solid #808080; width: 6em;">&phi;<sub>1</sub> &and; &phi;<sub>2</sub></td>
+                </tr>
+                <tr>
+                  <td>0</td>
+                  <td>0</td>
+                  <td style="border-left: 2px solid #808080;">0</td>
+                </tr>
+                <tr>
+                  <td>0</td>
+                  <td>1</td>
+                  <td style="border-left: 2px solid #808080;">0</td>
+                </tr>
+                <tr>
+                  <td>1</td>
+                  <td>0</td>
+                  <td style="border-left: 2px solid #808080;">0</td>
+                </tr>
+                <tr>
+                  <td>1</td>
+                  <td>1</td>
+                  <td style="border-left: 2px solid #808080;">1</td>
+                </tr>
+              </table>
+              <p>Truth table for AND</p>
+            </div>
+
+            <p>
+              It's exactly the same principle for AND, but with a different truth table. The truth table for AND says that a formula (&phi;<sub>1</sub> &or; &phi;<sub>2</sub>) is made true exactly when both the formulas &phi;<sub>1</sub> and &phi;<sub>2</sub> are made true.
+            </p>
+
+            <div class="center demonstration">
+              <table style="margin-left: auto; margin-right: auto; padding-bottom: 1em;">
+                <tr >
+                  <td style="border-bottom: 2px solid #808080; width: 3em;">&phi;<sub>1</sub></td>
+                  <td style="border-bottom: 2px solid #808080; width: 6em;">&not;&phi;<sub>1</sub></td>
+                </tr>
+                <tr>
+                  <td>0</td>
+                  <td style="border-left: 2px solid #808080;">1</td>
+                </tr>
+                <tr>
+                  <td>1</td>
+                  <td style="border-left: 2px solid #808080;">0</td>
+                </tr>
+              </table>
+              <p>Truth table for NOT</p>
+            </div>
+
+            <p>
+              The truth table for NOT is a bit simpler, but the idea is exactly the same. Because NOT takes a single smaller formula, there are only two rows. You look at whether &phi;<sub>1</sub> is made true or false, and this is enough to find the right row. The truth table for NOT says that &not;&phi;<sub>1</sub> is made true exactly when &phi;<sub>1</sub> is not made true.
+            </p>
+
+            <p>
+              With these rules you can figure out for each formula and for each truth assignment whether it makes the formula true or false. And this is all there is to the meaning (or semantics) of the formula.
+            </p>
+
+            <h2>Conjunctive normal form (CNF) & SAT</h2>
+
+            <p>
+              We can now explain what we mean with the satisfiability (SAT) problem. The input is a formula, and the task is to find out if there is a truth assignment to the propositional variables in the formula that makes the formula true.
+            </p>
+
+            <p>
+              The explanation is simple, but it's not as easy as you might think to solve the problem. The number of truth assignments grows exponentially as the number of propositional variables gets larger. In other words, the search space is enormous. Again, it's like finding a needle in a haystack.
+            </p>
+
+            <p>
+              To make their lives a tiny bit simpler, computer scientists often assume that the input formula for SAT is not too messy. To be precise, they assume that the input formula is in <i>conjunctive normal form</i> (<i>CNF</i>). What does this mean?
+            </p>
+
+            <p>
+              To explain this, I will use a few terms.
+              A <i>literal</i> is a propositional variable <i>x<sub>i</sub></i>
+              or the negation &not;<i>x<sub>i</sub></i> of a propositional variable.
+            </p>
+
+            <p>
+              A <i>clause</i> is the disjunction of several literals.
+              In other words, a clause is several literals put together with ORs.
+            </p>
+
+            <p>
+              A CNF formula is the conjunction of several clauses.
+              In other words, a CNF formula is several clauses put together with ANDs.
+            </p>
+
+            <p>
+              Let's look at some examples of CNF formulas, and try to make them true!
             </p>
 
           </div>
