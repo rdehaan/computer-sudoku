@@ -1,6 +1,8 @@
 // This file is released under the MIT license.
 // See LICENSE.md.
 
+solution_reached = false;
+
 var output = "";
 var pretty_output = "";
 
@@ -76,7 +78,12 @@ function pretty_repr_lit(lit) {
   }
 }
 
-function interface_start() {
+async function interface_start() {
+  if (solution_reached) {
+    do_reset();
+  }
+  solution_reached = false;
+
   should_abort = false;
   document.getElementById("btn_solve").disabled = true;
   document.getElementById("btn_pause").disabled = false;
@@ -194,6 +201,7 @@ function interface_result(result) {
     addToPrettyOutput("Found solution! :)");
     addToPrettyOutput("");
     addToPrettyOutput("(Number of learned clauses: " + num_learned_clauses + ")");
+    solution_reached = true;
   } else if (result == "UNSAT") {
     console.log("UNSATISFIABLE");
   } else if (result == "ABORT") {
