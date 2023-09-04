@@ -38,42 +38,123 @@ See LICENSE.md.
         <div class="post-content">
           <div>
 
-            <h2>Lorem</h2>
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Cursus turpis massa tincidunt dui ut ornare lectus sit. Mattis aliquam faucibus purus in. Mattis ullamcorper velit sed ullamcorper morbi tincidunt ornare massa. Pretium lectus quam id leo in vitae. Eu tincidunt tortor aliquam nulla. Tellus elementum sagittis vitae et leo duis ut. Vitae turpis massa sed elementum tempus egestas sed. Nibh sit amet commodo nulla facilisi. Nunc mi ipsum faucibus vitae aliquet nec ullamcorper sit. Nisl purus in mollis nunc. Neque viverra justo nec ultrices dui sapien eget mi proin. Lacus sed turpis tincidunt id aliquet risus. Malesuada fames ac turpis egestas. Ultrices sagittis orci a scelerisque purus semper. Augue mauris augue neque gravida in.
+              You've had a go at trying to find a satisfying assignment for a CNF formula. So now you have a bit of a feeling for the hard work involved in this search, even for small CNF formulas, let alone for very large ones. You might even have some ideas about how this search can be done intelligently.
             </p>
 
-            <h3>Idem</h3>
             <p>
-              Massa sed elementum tempus egestas sed sed. Euismod quis viverra nibh cras pulvinar mattis nunc sed blandit. Et tortor consequat id porta nibh venenatis cras sed felis. Aliquam etiam erat velit scelerisque in dictum. Nisi quis eleifend quam adipiscing vitae proin sagittis. Neque viverra justo nec ultrices dui sapien eget mi. Porttitor massa id neque aliquam vestibulum morbi blandit cursus risus. Massa ultricies mi quis hendrerit dolor magna eget est. Accumsan tortor posuere ac ut. Et malesuada fames ac turpis egestas. Eu nisl nunc mi ipsum faucibus. Faucibus scelerisque eleifend donec pretium vulputate sapien. Tincidunt id aliquet risus feugiat in ante metus dictum at. Metus aliquam eleifend mi in. Quis viverra nibh cras pulvinar mattis. Egestas congue quisque egestas diam in arcu cursus euismod. Dictumst vestibulum rhoncus est pellentesque elit.
+              Let's now turn to how this search is done intelligently by SAT solving algorithms. I will explain the main working of the core method of most state-of-the-art algorithms.
+            </p>
+
+            <p class="sidenote">
+              (<i>Note:</i> Again, the explanation below contains a lot of text. If you'd rather just play with examples to get a feeling than read the text, just go to the next page and play around.)
+            </p>
+
+            <h2>Backtracking search with unit propagation</h2>
+
+            <p>
+              Two of the main ideas behind the algorithms are called <i>backtracking search</i> and <i>propagation</i>.
+              Propagation means that whenever the algorithm can draw a conclusion about what truth value some variable must get, it does so. Backtracking search means that whenever it cannot draw further conclusions, it just tries something. It assigns some truth value to some variable. If this leads to a solution, great! If not, it will go back later and try the other possibility.
+            </p>
+
+            <p>
+              There are all types of conclusions that can be drawn about the truth value of variables. The most important type, that is central to the working of SAT solving algorithms, is called <i>unit propagation</i>. This is based on the following principle. Whenever there is a clause, and all but one of the literals in the clause are already made false, then the only way to make the clause true is to make the last literal true. So the conclusion that you can draw is that this last literal must be made true. This is called unit propagation. (The term <i>unit</i> refers to the fact that there is only one literal remaining to make the clause true.)
+            </p>
+
+            <p>
+              Let's look at an example, and let's make it a bit more visual.
+              Suppose the formula contains the following clause,
+              and suppose that you have already made variable x<sub>1</sub> false and variable x<sub>3</sub> true.
             </p>
 
             <div class="center">
               <ul class="clause openclause">
                 <li class="literal falselit">x<sub>1</sub></li>
                 <li>&or;</li>
-                <li class="literal falselit">&not; x<sub>2</sub></li>
+                <li class="literal openlit">&not; x<sub>2</sub></li>
                 <li>&or;</li>
-                <li class="literal openlit">&not; x<sub>3</sub></li>
+                <li class="literal falselit">&not; x<sub>3</sub></li>
               </ul>
             </div>
 
             <p>
-              Ipsum faucibus vitae aliquet nec ullamcorper sit amet risus nullam. Viverra accumsan in nisl nisi scelerisque eu ultrices. Natoque penatibus et magnis dis. Leo vel fringilla est ullamcorper. Semper eget duis at tellus at. Lacus viverra vitae congue eu consequat ac. Metus dictum at tempor commodo. Sem nulla pharetra diam sit amet nisl suscipit. At consectetur lorem donec massa sapien faucibus. Purus semper eget duis at tellus at urna condimentum. Tellus at urna condimentum mattis pellentesque id nibh. Sed augue lacus viverra vitae. Quis auctor elit sed vulputate mi sit amet mauris commodo. Enim diam vulputate ut pharetra sit amet aliquam id diam.
+              Then the only way to make this clause true is to make variable
+              x<sub>2</sub> false, which makes the final remaining literal in the clause true:
             </p>
 
             <div class="center">
               <ul class="clause trueclause">
                 <li class="literal falselit">x<sub>1</sub></li>
                 <li>&or;</li>
-                <li class="literal falselit">&not; x<sub>2</sub></li>
+                <li class="literal truelit">&not; x<sub>2</sub></li>
                 <li>&or;</li>
-                <li class="literal truelit">&not; x<sub>3</sub></li>
+                <li class="literal falselit">&not; x<sub>3</sub></li>
               </ul>
             </div>
 
             <p>
-              Amet nulla facilisi morbi tempus iaculis urna id volutpat. Gravida dictum fusce ut placerat orci nulla pellentesque. Turpis nunc eget lorem dolor sed. Venenatis a condimentum vitae sapien pellentesque habitant morbi. Aliquet nibh praesent tristique magna sit amet purus gravida quis. Vitae justo eget magna fermentum iaculis eu non. Quam quisque id diam vel quam elementum pulvinar etiam. Porttitor rhoncus dolor purus non enim. Enim facilisis gravida neque convallis a. Est placerat in egestas erat imperdiet sed euismod nisi. Vulputate odio ut enim blandit. Malesuada fames ac turpis egestas maecenas pharetra.
+              The general working of the approach of backtracking search with unit propagation can be summarized as follows:
+            </p>
+
+            <ul>
+              <li>While there are still clauses in the formula that are not made true yet:</li>
+              <ul>
+                <li>Apply unit propagation as much as possible.</li>
+                <li>If this forces you to make some clause false, undo your last choice and choose the opposite. (If there are no more choices to undo, conclude that there is no satisfying assignment.)</li>
+                <li>Make a choice: pick a variable and either set it to true or to false, and continue.</li>
+              </ul>
+            </ul>
+
+            <p>
+              In other words, you don't even have to consider the option of setting x<sub>2</sub> true, because it will not lead to a satisfying assignment for the formula. (Unless you go back and undo some previous choices, that is.)
+            </p>
+
+            <h2>Analyze and learn</h2>
+
+            <p>
+              Propagation is one intelligent thing to do in the search, but it is a very modest addition of intelligence. It is also not enough to make the search go fast for large formulas. Another main ingredient in the working of modern SAT solving algorithms is that whenever they are forced to undo previous choices, they analyze the situation. This is called <i>conflict analysis</i> (conflict refers to the fact that some clause is made false).
+            </p>
+
+            <p>
+              The idea behind this analysis is to find out which choices played a role in the conflict. For example, suppose that the algorithm has made 100 choices, and that only the first and the last of these choices play a role in a conflict. Then it is no use in undoing the 98 choices in between when trying to find a satisfying assignment.
+            </p>
+
+            <p>
+              I will not dive into the details of how this conflict analysis works. That's too many details for this explainer. What I will do, is tell you what the result of the conflict analysis is.
+            </p>
+
+            <p>
+              When analyzing a conflict, the algorithm determines which choices played a role in leading to the conflict. It summarizes this information in the form of a new clause that can be added to the formula. This new formula is <i>logically entailed</i>, which means that adding it doesn't change the satisfying assignments. You can think of this as a clause that was hiding in the other clauses, and that is now revealed.
+            </p>
+
+            <p>
+              What's the use of revealing these 'hidden' clauses, you might ask. Now we only have more clauses to deal with. There are two main purposes. The first one is that now this new clause can be used for unit propagation, to draw conclusions that cannot be drawn by unit propagation on the original clauses.
+            </p>
+
+            <p>
+              The other purpose is that the algorithm can use the new clauses to make the backtracking more intelligent.
+            </p>
+
+            <h2>Backjumping</h2>
+
+            <p>
+              The basic backtracking approach simply undoes the last choice that was made, whenever there is a conflict. However, the last choice might have nothing to do with the conflict. Think back to the example with 100 choices, 98 of which were irrelevant to the conflict. When it is time to backtrack over the 98 irrelevant choices, the basic algorithm will do a lot of pointless work.
+            </p>
+
+            <p>
+              A more intelligent approach is called <i>backjumping</i>. When a conflict is analyzed and a 'hidden' clause is revealed that summarizes the conflict analysis, this can be used to figure out which is the last relevant choice that was made. Backjumping then undoes this choice. In the process, it also undoes all the (irrelevant) choices that were made in between. As it were, it jumps back over these choices. That's why it's called backjumping.
+            </p>
+
+            <p>
+              For example, backjumping would jump over the 98 irrelevant choices, and go back to the first choice, which was the last relevant choice that was made in our example.
+            </p>
+
+            <p>
+              (The basic backtracking search algorithm with unit propagation, extended with conflict analysis and backjumping, is also called <a href="https://en.wikipedia.org/wiki/Conflict-driven_clause_learning">conflict-driven clause learning (CDCL)</a>.)
+            </p>
+
+            <p>
+              Let's see all of this in action on the two CNF formulas that you just played with!
             </p>
 
           </div>
