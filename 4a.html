@@ -14,6 +14,7 @@ See LICENSE.md.
   <title>How computers solve Sudoku's</title>
 
   <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/clauses.css">
 </head>
 
 <body>
@@ -37,22 +38,161 @@ See LICENSE.md.
         <div class="post-content">
           <div>
 
-            <h2>Lorem</h2>
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Cursus turpis massa tincidunt dui ut ornare lectus sit. Mattis aliquam faucibus purus in. Mattis ullamcorper velit sed ullamcorper morbi tincidunt ornare massa. Pretium lectus quam id leo in vitae. Eu tincidunt tortor aliquam nulla. Tellus elementum sagittis vitae et leo duis ut. Vitae turpis massa sed elementum tempus egestas sed. Nibh sit amet commodo nulla facilisi. Nunc mi ipsum faucibus vitae aliquet nec ullamcorper sit. Nisl purus in mollis nunc. Neque viverra justo nec ultrices dui sapien eget mi proin. Lacus sed turpis tincidunt id aliquet risus. Malesuada fames ac turpis egestas. Ultrices sagittis orci a scelerisque purus semper. Augue mauris augue neque gravida in.
+              We can use the intelligence built into SAT solving algorithms to solve our Sudoku puzzles. To see how, let's remind ourselves of the general approach for doing this. It's summarized in the following figure (that we've seen before).
             </p>
 
-            <h3>Idem</h3>
+            <div class="center demonstration">
+              <table style="margin-left: auto; margin-right: auto;">
+                <tr>
+                  <td style="border: 2px solid #808080; padding: 5px; width: 10em; background-color: #eef;">Sudoku puzzle</td>
+                  <td style="width: 8em;"></td>
+                  <td style="border: 2px solid #808080; padding: 5px; width: 10em; background-color: #efe;">Solution</td>
+                </tr>
+                <tr>
+                  <td>&dArr;</td>
+                  <td></td>
+                  <td>&uArr;</td>
+                </tr>
+                <tr>
+                  <td style="border: 2px solid #808080; padding: 5px; width: 10em;">Logic formula</td>
+                  <td>&rArr;</td>
+                  <td style="border: 2px solid #808080; padding: 5px; width: 10em;">Truth assignment</td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td>SAT solving algorithm</td>
+                  <td></td>
+                </tr>
+              </table>
+            </div>
+
             <p>
-              Massa sed elementum tempus egestas sed sed. Euismod quis viverra nibh cras pulvinar mattis nunc sed blandit. Et tortor consequat id porta nibh venenatis cras sed felis. Aliquam etiam erat velit scelerisque in dictum. Nisi quis eleifend quam adipiscing vitae proin sagittis. Neque viverra justo nec ultrices dui sapien eget mi. Porttitor massa id neque aliquam vestibulum morbi blandit cursus risus. Massa ultricies mi quis hendrerit dolor magna eget est. Accumsan tortor posuere ac ut. Et malesuada fames ac turpis egestas. Eu nisl nunc mi ipsum faucibus. Faucibus scelerisque eleifend donec pretium vulputate sapien. Tincidunt id aliquet risus feugiat in ante metus dictum at. Metus aliquam eleifend mi in. Quis viverra nibh cras pulvinar mattis. Egestas congue quisque egestas diam in arcu cursus euismod. Dictumst vestibulum rhoncus est pellentesque elit.
+              In words, what we'll do is (1) take our Sudoku puzzle, and convert it into a logic formula. Then (2) use the SAT solving algorithm to find a satisfying assignment for the formula. And finally (3) we'll convert the satisfying assignment back into a solution for the Sudoku puzzle. Simple enough, right?
             </p>
 
             <p>
-              Ipsum faucibus vitae aliquet nec ullamcorper sit amet risus nullam. Viverra accumsan in nisl nisi scelerisque eu ultrices. Natoque penatibus et magnis dis. Leo vel fringilla est ullamcorper. Semper eget duis at tellus at. Lacus viverra vitae congue eu consequat ac. Metus dictum at tempor commodo. Sem nulla pharetra diam sit amet nisl suscipit. At consectetur lorem donec massa sapien faucibus. Purus semper eget duis at tellus at urna condimentum. Tellus at urna condimentum mattis pellentesque id nibh. Sed augue lacus viverra vitae. Quis auctor elit sed vulputate mi sit amet mauris commodo. Enim diam vulputate ut pharetra sit amet aliquam id diam.
+              So let's have a look at how we can build a logic formula that expresses a Sudoku puzzle, and how we can get back a solution for the puzzle from a satisfying assignment.
+            </p>
+
+            <h2>General set-up</h2>
+            <p>
+              The general approach for building the formula is that we will use propositional variables that we can use to talk about the solution of the Sudoku puzzle. Concretely, for each row index <i>r</i>, each column index <i>c</i>, and each value <i>v</i> (all from 1 to 9), we will use a variable <i>x<sub>r,c,v</sub></i>. Such a variable expresses that there is the value <i>v</i> in the cell (<i>r</i>,<i>c</i>). In other words, if the variable is true, the cell in row <i>r</i> and column <i>c</i> contains the value <i>v</i>, and if it is false, this is not the case.
             </p>
 
             <p>
-              Amet nulla facilisi morbi tempus iaculis urna id volutpat. Gravida dictum fusce ut placerat orci nulla pellentesque. Turpis nunc eget lorem dolor sed. Venenatis a condimentum vitae sapien pellentesque habitant morbi. Aliquet nibh praesent tristique magna sit amet purus gravida quis. Vitae justo eget magna fermentum iaculis eu non. Quam quisque id diam vel quam elementum pulvinar etiam. Porttitor rhoncus dolor purus non enim. Enim facilisis gravida neque convallis a. Est placerat in egestas erat imperdiet sed euismod nisi. Vulputate odio ut enim blandit. Malesuada fames ac turpis egestas maecenas pharetra.
+              At least, that's the plan. This is the <i>intended meaning</i> for the variables. We have to do the hard work ourselves to actually make sure that we build the formula in the right way to get this to work.
+            </p>
+
+            <p class="sidenote">
+              (<i>Note:</i> Before, we only had variables <i>x<sub>1</sub></i>, <i>x<sub>2</sub></i>, etc. These variables had just one number as index. Now we are using variables <i>x<sub>r,c,v</sub></i> with multiple indices. This is not changing the rules or cheating in any way. It's just to make our life easier. In theory, we could translate everything back to variables with just one index, but that would just be annoying and tedious. So let's not do that!)
+            </p>
+
+            <p>
+              To get things to work out, we have to make sure that the formula expresses various things. For example, it should capture that no cell may get two different values. And that a value doesn't appear twice in a row, to mention another example. We'll get to all that in a minute.
+            </p>
+
+            <p>
+              Suppose that we have built the formula in the right way. How do we then get a solution for the Sudoku puzzle from a satisfying assignment? That's simple. All we need to do is just "read off" the solution. For example, to see what value there should be in cell (1,1), we just find out which variable <i>x<sub>1,1,v</sub></i> is made true, and that gives us the value <i>v</i>. And so on.
+            </p>
+
+            <p>
+              Now all that remains is to actually build the formula.
+            </p>
+
+            <h2>Expressing the rules of Sudoku</h2>
+            <p>
+              We're building a CNF formula. This means that we have to translate everything to clauses. What we'll do is take all the properties that we need from a Sudoku solution, and express them using clauses. This way, we'll get a whole bunch of clauses, which together form the formula.
+            </p>
+
+            <p>
+              The first property is that all the cells already filled in in the puzzle should stay the same in the solution. For example, if in cell (2,3) there is a 4 in the puzzle, we add the following clause. (And we do this for all the given values in the puzzle.)
+            </p>
+            <div class="center">
+              <ul class="clause openclause">
+                <li class="literal openlit">x<sub>2,3,4</sub></li>
+              </ul>
+            </div>
+
+            <p>
+              Next, to express that each cell contains at least one value, we add the following clause for each cell (<i>r</i>,<i>c</i>).
+              This clause can only be true if for at least one value <i>v</i>, the variable <i>x<sub>r,c,v</sub></i> is made true, which is exactly what we want.
+            </p>
+            <div class="center">
+              <ul class="clause openclause">
+                <li class="literal openlit">x<sub><i>r</i>,<i>c</i>,1</sub></li>
+                <li>&or;</li>
+                <li class="literal openlit">x<sub><i>r</i>,<i>c</i>,2</sub></li>
+                <li>&or;</li>
+                <li>...</li>
+                <li>&or;</li>
+                <li class="literal openlit">x<sub><i>r</i>,<i>c</i>,9</sub></li>
+              </ul>
+            </div>
+
+            <p>
+              Expressing that each cell contains at most one value we do as follows. For each cell (<i>r</i>,<i>c</i>), and for each two different values <i>v<sub>1</sub></i> and <i>v<sub>2</sub></i>,
+              we add the following clause.
+              This says that the cell may not get both values at the same time. And because we require this for all pairs of different values, we get that the cell may contain only one value.
+            </p>
+            <div class="center">
+              <ul class="clause openclause">
+                <li class="literal openlit">&not; x<sub><i>r</i>,<i>c</i>,<i>v<sub>1</sub></i></sub></li>
+                <li>&or;</li>
+                <li class="literal openlit">&not; x<sub><i>r</i>,<i>c</i>,<i>v<sub>2</sub></i></sub></li>
+              </ul>
+            </div>
+
+            <p>
+              We use a similar approach to express that each value appears at most once in a row.
+              For each row <i>r</i> and each value <i>v</i>, and for each two different column indices <i>c<sub>1</sub></i> and <i>c<sub>2</sub></i>, we add the following clause.
+              This says that no two cells in the same row may not get this value.
+            </p>
+            <div class="center">
+              <ul class="clause openclause">
+                <li class="literal openlit">&not; x<sub><i>r</i>,<i>c<sub>1</sub></i>,<i>v</i></sub></li>
+                <li>&or;</li>
+                <li class="literal openlit">&not; x<sub><i>r</i>,<i>c<sub>2</sub></i>,<i>v</i></sub></li>
+              </ul>
+            </div>
+
+            <p>
+              In a similar way, we can also express that each value appears at most once in a column, and at most once in a 3 &times; 3 block. As an exercise, can you think of what the clauses look like that express this?
+            </p>
+
+            <p>
+              And that's all! These clauses express everything that we want from a solution for the Sudoku puzzle.
+            </p>
+
+            <h2>Some bonus clauses</h2>
+            <p>
+              The formula that we built expresses all that we need, but it also contains a lot of 'hidden' clauses. So to help the algorithm a bit, we can already add some of these hidden clauses.
+            </p>
+
+            <p>
+              For example, we also know that each value appears at least once in a row. To express this, we can add the following clause for each row <i>r</i> and each value <i>v</i>.
+              This clause can only be true if for at least one column <i>c</i>, the variable <i>x<sub>r,c,v</sub></i> is made true.
+            </p>
+            <div class="center">
+              <ul class="clause openclause">
+                <li class="literal openlit">x<sub><i>r</i>,<i>1</i>,<i>v</i></sub></li>
+                <li>&or;</li>
+                <li class="literal openlit">x<sub><i>r</i>,<i>2</i>,<i>v</i></sub></li>
+                <li>&or;</li>
+                <li>...</li>
+                <li>&or;</li>
+                <li class="literal openlit">x<sub><i>r</i>,<i>9</i>,<i>v</i></sub></li>
+              </ul>
+            </div>
+
+            <p>
+              And in the same way, we can add clauses that express that each value appears at least once in each column, and at least once in each 3 &times; 3 block.
+            </p>
+
+            <p>&nbsp;</p>
+
+            <p>
+              Now that we've built our formula, let's see how quickly the SAT solving algorithm can find a solution for our Sudoku examples.
             </p>
 
           </div>
