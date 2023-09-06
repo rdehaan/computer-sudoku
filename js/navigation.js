@@ -207,4 +207,6 @@ function insertNav(current_id) {
   var footerNavElement = document.getElementById('footer-nav');
   headerNavElement.innerHTML = html_string;
   footerNavElement.innerHTML = html_string;
+
+  document.title = "How computers solve Sudoku's (" + current_id + ")";
 }
