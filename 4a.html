@@ -106,7 +106,7 @@ See LICENSE.md.
             </p>
 
             <p>
-              The first property is that all the cells already filled in in the puzzle should stay the same in the solution. For example, if in cell (2,3) there is a 4 in the puzzle, we add the following clause. (And we do this for all the given values in the puzzle.)
+              The first property is that <b>all the cells already filled in in the puzzle should stay the same in the solution</b>. For example, if in cell (2,3) there is a 4 in the puzzle, we add the following clause. (And we do this for all the given values in the puzzle.)
             </p>
             <div class="center">
               <ul class="clause openclause">
@@ -115,7 +115,7 @@ See LICENSE.md.
             </div>
 
             <p>
-              Next, to express that each cell contains at least one value, we add the following clause for each cell (<i>r</i>,<i>c</i>).
+              Next, to express that <b>each cell contains at least one value</b>, we add the following clause for each cell (<i>r</i>,<i>c</i>).
               This clause can only be true if for at least one value <i>v</i>, the variable <i>x<sub>r,c,v</sub></i> is made true, which is exactly what we want.
             </p>
             <div class="center">
@@ -131,7 +131,7 @@ See LICENSE.md.
             </div>
 
             <p>
-              Expressing that each cell contains at most one value we do as follows. For each cell (<i>r</i>,<i>c</i>), and for each two different values <i>v<sub>1</sub></i> and <i>v<sub>2</sub></i>,
+              Expressing that <b>each cell contains at most one value</b> we do as follows. For each cell (<i>r</i>,<i>c</i>), and for each two different values <i>v<sub>1</sub></i> and <i>v<sub>2</sub></i>,
               we add the following clause.
               This says that the cell may not get both values at the same time. And because we require this for all pairs of different values, we get that the cell may contain only one value.
             </p>
@@ -144,7 +144,7 @@ See LICENSE.md.
             </div>
 
             <p>
-              We use a similar approach to express that each value appears at most once in a row.
+              We use a similar approach to express that <b>each value appears at most once in a row</b>.
               For each row <i>r</i> and each value <i>v</i>, and for each two different column indices <i>c<sub>1</sub></i> and <i>c<sub>2</sub></i>, we add the following clause.
               This says that no two cells in the same row may not get this value.
             </p>
@@ -157,7 +157,7 @@ See LICENSE.md.
             </div>
 
             <p>
-              In a similar way, we can also express that each value appears at most once in a column, and at most once in a 3 &times; 3 block. As an exercise, can you think of what the clauses look like that express this?
+              In a similar way, we can also express that <b>each value appears at most once in a column, and at most once in a 3 &times; 3 block</b>. As an exercise, can you think of what the clauses look like that express this?
             </p>
 
             <p>
@@ -166,11 +166,11 @@ See LICENSE.md.
 
             <h2>Some bonus clauses</h2>
             <p>
-              The formula that we built expresses all that we need, but it also contains a lot of 'hidden' clauses. So to help the algorithm a bit, we can already add some of these hidden clauses.
+              The formula that we built expresses all that we need, but it also contains a lot of 'hidden' clauses. To help the algorithm a bit, we can already add some of these hidden clauses.
             </p>
 
             <p>
-              For example, we also know that each value appears at least once in a row. To express this, we can add the following clause for each row <i>r</i> and each value <i>v</i>.
+              For example, we also know that <b>each value appears at least once in a row</b>. To express this, we can add the following clause for each row <i>r</i> and each value <i>v</i>.
               This clause can only be true if for at least one column <i>c</i>, the variable <i>x<sub>r,c,v</sub></i> is made true.
             </p>
             <div class="center">
@@ -186,7 +186,7 @@ See LICENSE.md.
             </div>
 
             <p>
-              And in the same way, we can add clauses that express that each value appears at least once in each column, and at least once in each 3 &times; 3 block.
+              And in the same way, we can add clauses that express that <b>each value appears at least once in each column, and at least once in each 3 &times; 3 block</b>.
             </p>
 
             <p>&nbsp;</p>
