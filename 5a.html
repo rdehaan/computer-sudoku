@@ -85,7 +85,8 @@ See LICENSE.md.
             </p>
 
             <p>
-              In the following program, line 2 expresses some facts. It says that 1, 2, 3 and 4 are small numbers. Or more precisely, it says that <tt>small_number(1)</tt>, ..., <tt>small_number(4)</tt> are true.
+              In the following program, line 2 expresses some facts. It says that 1, 2, 3 and 4 are small numbers.
+              <!-- Or more precisely, it says that <tt>small_number(1)</tt>, ..., <tt>small_number(4)</tt> are true. -->
               (As you can see in line 1, like in other programming languages, we can use constants. Here, we have a constant called <tt>k</tt>, that we use in line 2.)
               Line 3 contains a rule that says that whenever <tt>N</tt> is a small number, then <tt>N</tt> is also a number.
             </p>
@@ -143,6 +144,12 @@ number(N) :- small_number(N).</pre>
 
 <pre class="program">
 1 { favorite_number(N) : nice_number(N) } 1.</pre>
+
+            <p class="sidenote">
+              (<i>Note:</i>
+              You can say even more kinds of things in the language. For example, you can use <tt>not</tt> to talk about negated statements. You can use arithmetic, like addition, subtraction, multiplication. You can sum numbers, or take the maximum of some numbers. And there are even more features of the language,
+              but for our Sudoku puzzles, the examples on this page are enough.) 
+            </p>
 
             <p>&nbsp;</p>
 
