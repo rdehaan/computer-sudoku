@@ -5,18 +5,6 @@ var input = ace.edit("input");
 var ex = document.getElementById("examples");
 var explElem = document.getElementById("explanation");
 
-explanations = {
-  "encodings/simple1.lp": `
-  This explains simple1.lp.
-  `,
-  "encodings/simple2.lp": `
-  This explains simple2.lp.
-  `,
-  "encodings/heuristic3.lp": `
-  This explains heuristic3.lp.
-  `,
-}
-
 input.setTheme("ace/theme/textmate");
 input.$blockScrolling = Infinity;
 input.setOptions({

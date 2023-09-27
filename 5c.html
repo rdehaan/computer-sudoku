@@ -37,9 +37,20 @@ See LICENSE.md.
         <div class="post-content">
           <div>
 
-            <h2>Lorem</h2>
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Cursus turpis massa tincidunt dui ut ornare lectus sit. Mattis aliquam faucibus purus in. Mattis ullamcorper velit sed ullamcorper morbi tincidunt ornare massa. Pretium lectus quam id leo in vitae. Eu tincidunt tortor aliquam nulla. Tellus elementum sagittis vitae et leo duis ut. Vitae turpis massa sed elementum tempus egestas sed. Nibh sit amet commodo nulla facilisi. Nunc mi ipsum faucibus vitae aliquet nec ullamcorper sit. Nisl purus in mollis nunc. Neque viverra justo nec ultrices dui sapien eget mi proin. Lacus sed turpis tincidunt id aliquet risus. Malesuada fames ac turpis egestas. Ultrices sagittis orci a scelerisque purus semper. Augue mauris augue neque gravida in.
+              Now that you have a bit of an idea of how the logical language of ASP works, and how algorithms can use the idea of conflict analysis and learning to efficiently find solutions for problems expressed in this language, let's see how we can express Sudoku puzzles.
+            </p>
+
+            <p>
+              Below, you can view three different ways of expressing Sudoku puzzles in the language of ASP. In computer science lingo, these are called <i>encodings</i> of the problem of Sudoku puzzles into the language of ASP. Select an encoding from the drop-down menu below, and the page will show you the program and an explanation below it.
+            </p>
+
+            <p>
+              The explanations will probably not be enough for you to really understand all the details of these encodings, but they should give you a bit of an idea of how you can use different types of statements to express Sudoku puzzles (and to help the solving algorithm a bit in its search).
+            </p>
+
+            <p>
+              These are just three examples of encodings. One can think of many more encodings. For this explainer, let's stick to these three. On the next page, we'll see with how the algorithm of clingo uses these encodings to find a solution for our Sudoku B!
             </p>
 
           </div>
@@ -68,13 +79,7 @@ See LICENSE.md.
             <div id="explanation"></div>
 
           </div>
-          <!-- <div>
 
-            <p>
-              Massa sed elementum tempus egestas sed sed. Euismod quis viverra nibh cras pulvinar mattis nunc sed blandit. Et tortor consequat id porta nibh venenatis cras sed felis. Aliquam etiam erat velit scelerisque in dictum. Nisi quis eleifend quam adipiscing vitae proin sagittis. Neque viverra justo nec ultrices dui sapien eget mi. Porttitor massa id neque aliquam vestibulum morbi blandit cursus risus. Massa ultricies mi quis hendrerit dolor magna eget est. Accumsan tortor posuere ac ut. Et malesuada fames ac turpis egestas. Eu nisl nunc mi ipsum faucibus. Faucibus scelerisque eleifend donec pretium vulputate sapien. Tincidunt id aliquet risus feugiat in ante metus dictum at. Metus aliquam eleifend mi in. Quis viverra nibh cras pulvinar mattis. Egestas congue quisque egestas diam in arcu cursus euismod. Dictumst vestibulum rhoncus est pellentesque elit.
-            </p>
-
-          </div> -->
         </div>
 
       </article>
@@ -90,6 +95,24 @@ See LICENSE.md.
 
   </footer>
 </body>
+
+<script type="text/javascript">
+  explanations = {
+    "encodings/simple1.lp": `
+    The rules in lines 6, 8 and 10 express that each cell contains exactly one value, and that each value appears exactly once in each row and in each column. The left-hand side of the rules uses a choose-exactly-one statement.<br><br>
+    The rules in lines 13 to 17 express that each value may appear <b>at most</b> once in each 3 &times; 3 block. This is done by adding constraints that in no block, a value may appear in two different spots.
+    `,
+    "encodings/simple2.lp": `
+    The rules in lines 7, 9 and 11 express that each cell contains exactly one value, and that each value appears exactly once in each row and in each column. The left-hand side of the rules uses a choose-exactly-one statement.<br><br>
+    The rules in lines 14 to 17 express that each value must appear <b>exactly</b> once in each 3 &times; 3 block. This is done with a choose-exactly-one statement.
+    `,
+    "encodings/heuristic3.lp": `
+    The rules in lines 7, 9 and 11 express that each cell contains exactly one value, and that each value appears exactly once in each row and in each column. The left-hand side of the rules uses a choose-exactly-one statement.<br><br>
+    The rules in lines 14 to 17 express that each value must appear <b>exactly</b> once in each 3 &times; 3 block. This is done with a choose-exactly-one statement.<br><br>
+    The statement on line 22 gives the solving algorithm instructions on which choices should be made first: it says that it should choose to put some value in some cell, rather than choosing to exclude a value from a cell.
+    `,
+  }
+</script>
 
 <script type="text/javascript" src="js/ace.js" charset="utf-8"></script>
 <script type="text/javascript" src="js/interface-5c.js" charset="utf-8"></script>
