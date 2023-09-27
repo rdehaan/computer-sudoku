@@ -37,22 +37,65 @@ See LICENSE.md.
         <div class="post-content">
           <div>
 
-            <h2>Lorem</h2>
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Cursus turpis massa tincidunt dui ut ornare lectus sit. Mattis aliquam faucibus purus in. Mattis ullamcorper velit sed ullamcorper morbi tincidunt ornare massa. Pretium lectus quam id leo in vitae. Eu tincidunt tortor aliquam nulla. Tellus elementum sagittis vitae et leo duis ut. Vitae turpis massa sed elementum tempus egestas sed. Nibh sit amet commodo nulla facilisi. Nunc mi ipsum faucibus vitae aliquet nec ullamcorper sit. Nisl purus in mollis nunc. Neque viverra justo nec ultrices dui sapien eget mi proin. Lacus sed turpis tincidunt id aliquet risus. Malesuada fames ac turpis egestas. Ultrices sagittis orci a scelerisque purus semper. Augue mauris augue neque gravida in.
-            </p>
-
-            <h3>Idem</h3>
-            <p>
-              Massa sed elementum tempus egestas sed sed. Euismod quis viverra nibh cras pulvinar mattis nunc sed blandit. Et tortor consequat id porta nibh venenatis cras sed felis. Aliquam etiam erat velit scelerisque in dictum. Nisi quis eleifend quam adipiscing vitae proin sagittis. Neque viverra justo nec ultrices dui sapien eget mi. Porttitor massa id neque aliquam vestibulum morbi blandit cursus risus. Massa ultricies mi quis hendrerit dolor magna eget est. Accumsan tortor posuere ac ut. Et malesuada fames ac turpis egestas. Eu nisl nunc mi ipsum faucibus. Faucibus scelerisque eleifend donec pretium vulputate sapien. Tincidunt id aliquet risus feugiat in ante metus dictum at. Metus aliquam eleifend mi in. Quis viverra nibh cras pulvinar mattis. Egestas congue quisque egestas diam in arcu cursus euismod. Dictumst vestibulum rhoncus est pellentesque elit.
+              We've seen how SAT solving algorithms work, and we have seen a richer logical language (ASP). Let me tell you a bit about how an intelligently designed solving algorithm works for the richer language of ASP.
             </p>
 
             <p>
-              Ipsum faucibus vitae aliquet nec ullamcorper sit amet risus nullam. Viverra accumsan in nisl nisi scelerisque eu ultrices. Natoque penatibus et magnis dis. Leo vel fringilla est ullamcorper. Semper eget duis at tellus at. Lacus viverra vitae congue eu consequat ac. Metus dictum at tempor commodo. Sem nulla pharetra diam sit amet nisl suscipit. At consectetur lorem donec massa sapien faucibus. Purus semper eget duis at tellus at urna condimentum. Tellus at urna condimentum mattis pellentesque id nibh. Sed augue lacus viverra vitae. Quis auctor elit sed vulputate mi sit amet mauris commodo. Enim diam vulputate ut pharetra sit amet aliquam id diam.
+              I will describe the essential workings of one such algorithm: <a href="https://potassco.org/clingo/">clingo</a>. This is a state-of-the-art implemented solving algorithm for ASP, that is used for industrial applications in practice, for example. Nevertheless, it is just one of the possible intelligent algorithms for ASP.
+            </p>
+
+            <p class="sidenote">
+              (<i>Note:</i> Once again, if you'd rather just skip the explanations on how the algorithm works, and keep going with some illustrations on how the language of ASP can be used for Sudoku puzzles, just go to the next page.)
             </p>
 
             <p>
-              Amet nulla facilisi morbi tempus iaculis urna id volutpat. Gravida dictum fusce ut placerat orci nulla pellentesque. Turpis nunc eget lorem dolor sed. Venenatis a condimentum vitae sapien pellentesque habitant morbi. Aliquet nibh praesent tristique magna sit amet purus gravida quis. Vitae justo eget magna fermentum iaculis eu non. Quam quisque id diam vel quam elementum pulvinar etiam. Porttitor rhoncus dolor purus non enim. Enim facilisis gravida neque convallis a. Est placerat in egestas erat imperdiet sed euismod nisi. Vulputate odio ut enim blandit. Malesuada fames ac turpis egestas maecenas pharetra.
+              The overall architecture of the algorithm is very much similar to that of the SAT algorithms that we saw. The algorithm uses backtracking search, with propagation to quickly make conclusions that follow from made choices. Whenever it runs into a conflict, it analyzes the conflict, and uses the learned information to backjump over previous choices that were not relevant to the conflict.
+            </p>
+
+            <h2>Propagation and learning</h2>
+            <p>
+              One important difference is that propagation can be more complicated for the richer language than it is for the simple language of CNF formulas. In some cases, it is like simple unit propagation. For example, when the program contains a rule and we already make everything in the if-part of the rule true, then we can directly conclude that the then-part of the rule should also be made true. Or when the program contains a constraint, and we already make all but one of the parts of the constraint true. Then we can conclude that the final part of the constraint must be false.
+            </p>
+
+            <p>
+              When using some of the more expressive parts of the language, propagation get more complicated. For example, when the program contains a statement that uses a sum whose value depends on the truth of some variables, the algorithm has to reason about the possible values that this sum can still take to see if any conclusions can be made about the statement.
+            </p>
+
+            <p>
+              Because the propagation can take more complicated forms, the conflict analysis can also be a bit more involved. For example, the algorithm has to take a bit of care in the analysis to see which choices are relevant to the conflict, and which ones aren't.
+            </p>
+
+            <h2>More checking</h2>
+            <p>
+              In our explanation of the language of ASP, we swept some details under the rug. These details can also make the search process a bit more complicated than in the case of SAT. For example, answer sets exclude the case where true statements are (only) justified by a cyclic argument. What I mean with this is the following. Suppose a program has two rules that say "If A then B" and "If B then A" (and no other rules about A and B). Then making A and B true will satisfy these rules, but this is not an answer set. (Again, I'm not explaining the details of how this works exactly.)
+            </p>
+
+            <p>
+              What the algorithm does is to perform checks throughout the search, to rule out any such cyclic arguments. It does some bookkeeping to detect any (purely) cyclic argument, and whenever it finds one, it adds a new constraint to the program to avoid this cyclic argument. This new constraint of course interacts with the rest of the search process. It can trigger propagation and force a conflict, which leads to analysis and learning, and so forth.
+            </p>
+
+            <h2>Bells and whistles</h2>
+            <p>
+              The algorithms that we have seen in this explainer leave open a lot of choices, and can be extended and tweaked in many ways. For example, a very important decision is the order in which choices are made. This can have an enormous effect on how long the search takes. If you make the right choices, you can get to the solution very quickly, but if you make the wrong choices, it can lead you to search a long time.
+            </p>
+
+            <p>
+              Clingo offers a large set of options and add-ons that extend and tweak the basic algorithm. To give you a rough idea, the source code of clingo contains many thousands of lines of code, and if you print the instructions for the options of clingo, you get hundreds of lines of instructions.
+            </p>
+
+            <p>
+              One interesting add-on to the algorithm is to restart the search from time to time. What this means is that the algorithm keeps all learned information, but undoes all the choices that it made, and starts from scratch in the search. Curiously, this can make the overall search much faster in some cases. The idea behind this is that the newly learned information leads the algorithm in the right direction, where previously it took a wrong turn.
+            </p>
+
+            <p>
+              Some of these bells and whistles that can be added to the basic algorithm can improve the search in some cases, but have an adverse effect in other cases. It's a research area on its own to figure out what combinations of options work well in what scenarios. (Fun fact: this fits under the cool sounding header of <a href="https://en.wikipedia.org/wiki/Hyper-heuristic">"hyper-heuristics"</a>.)
+            </p>
+
+            <p>&nbsp;</p>
+
+            <p>
+              Let's move on to see several ways of how we can express Sudoku puzzles in ASP.
             </p>
 
           </div>
