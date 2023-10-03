@@ -421,6 +421,11 @@ pre {
   color: #888;
 }
 
+.sidenotesmall {
+  color: #888;
+  font-size: 14px;
+}
+
 ul.display li {
   margin-bottom: 5px;
 }
