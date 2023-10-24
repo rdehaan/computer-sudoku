@@ -6,7 +6,7 @@ var list_of_pages = [
   {
     id: "1a",
     chapter: 1,
-    title: "Solving hard Sudoku's really quickly",
+    title: "Solving hard Sudokus really quickly",
     url: "1a.html",
   },
   {
@@ -89,7 +89,7 @@ var list_of_pages = [
   {
     id: "4a",
     chapter: 4,
-    title: "Encoding Sudoku's using logic",
+    title: "Encoding Sudokus using logic",
     url: "4a.html",
   },
   {
@@ -121,7 +121,7 @@ var list_of_pages = [
   {
     id: "5c",
     chapter: 5,
-    title: "Encoding Sudoku's using logic programs",
+    title: "Encoding Sudokus using logic programs",
     url: "5c.html",
   },
   {
@@ -208,5 +208,5 @@ function insertNav(current_id) {
   headerNavElement.innerHTML = html_string;
   footerNavElement.innerHTML = html_string;
 
-  document.title = "How computers solve Sudoku's (" + current_id + ")";
+  document.title = "How computers solve Sudokus (" + current_id + ")";
 }
